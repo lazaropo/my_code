@@ -1,13 +1,10 @@
 #include "classes.h"
+namespace my_string{
 
-class string{
-    char* str;
-    int lenght=0;
-protected:
-    string():
+    string::string():
     str(new char[0]), lenght(0){}
 
-    string(char* ptr)
+    string::string(char* ptr)
         : string(){
         int i = 0;
         do{
@@ -16,7 +13,7 @@ protected:
         lenght+=--i;
     }
 
-    string(char c):{
+    string::string(char c):{
         if(!lenght){
             string();
         }
@@ -24,28 +21,35 @@ protected:
         str[++lenght]='\0';
     }
 
-    string(const string& mom):
+    string::string(const string& mom):
     str(mom.str), lenght(mom.lenght){}
 
 
-    int get_lenght(){
+    int string::get_lenght(){
         return lenght;
     }
 
-    void remove_string(){
+    void string::remove_string(){
         delete str;
         str = nullptr;
         lenght=0;
     }
 
-    ~string(){
+    string::~string(){
         delete str;
     }
-};
 
-class string_identifier:public string{
-    int check_char(char c){
-        return ((c > 'a' && c < 'z')||(c>'A'&&c<'Z')||c=='_')?0:1;
+    char* string::get_string(){
+        return str;
+    }
+
+
+    //
+    //Definisions of funcs from STRING_IDENTIFIER class
+    //
+    int string_identifier::check_char(char c){
+        return ((c > LOWER_A && c < LOWER_Z)||(c>UPPER_A && c< UPPER_Z) ||
+        c == '_' ) ? 0 : 1;
     }
 
     char delta = 'a' - 'A';
@@ -102,24 +106,26 @@ public:
                 }
         }
 
-    string_identifier(const string_identifier& dad)
+    string_identifier::string_identifier(const string_identifier& dad)
         :string(dad){}
 
-    void uppercase(){
+    void string_identifier::uppercase(){
         for(int i=0; i<lenght:++i){
-            string.str[i]= string.str[i]>'Z': string.str[i]-delta:string.str[i];
+            string.str[i]= string.str[i]>UPPER_Z: string.str[i] - delta:
+            string.str[i];
         }
         return;
     }
 
-    void lowercase(){
+    void string_identifier::lowercase(){
         for(int i=0; i<lenght:++i){
-            string.str[i]= string.str[i]<'a': string.str[i]+delta:string.str[i];
+            string.str[i]= string.str[i]<LOWER_A: string.str[i]+delta :
+            string.str[i];
         }
         return;
     }
 
-    char* find_symbol(char c){
+    char* string_identifier::find_symbol(char c){
         char* ptr=string.str;
         while(*ptr!=c){
             ptr++;
@@ -127,21 +133,21 @@ public:
         return ptr;
     }
 
-    ~string_identifier{
+    string_identifier::~string_identifier{
         delete string;
     };
 
-    operator=(const string_identifier& init){
+    string_identifier& string_identifier::operator=(const string_identifier& init){
         string_identifier(init);
-        return init;
-    };
-
-    operator+(string_identifier&& temp){
-        string(temp.string.str);
         return *this;
     };
 
-    operator-(string_identifier&& tmp){
+    string_identifier& string_identifier::operator+(string_identifier&& temp){
+        static_cast<string&>(*this){temp.get_string()};
+        return *this;
+    };
+
+    string_identifier& string_identifier::operator-(string_identifier&& tmp){
         char* here = find_substring(tmp.string.str);
         if(here){
             char* ptr = string.str, new_s = new char[get_lenght()-tmp.get_lenght()];
@@ -164,6 +170,6 @@ public:
         }
     }
     
-    operator>(const string_identifier&);
-    operator<(const string_identifier&);
+    int string_identifier::operator>(const string_identifier&);
+    int string_identifier::operator<(const string_identifier&);
 };
