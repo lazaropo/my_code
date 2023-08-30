@@ -143,14 +143,15 @@ public:
     };
 
     string_identifier& string_identifier::operator+(string_identifier&& temp){
-        static_cast<string&>(*this){temp.get_string()};
+        string* pb = &*this;
+        *pb={temp.get_string()};
         return *this;
     };
 
     string_identifier& string_identifier::operator-(string_identifier&& tmp){
-        char* here = find_substring(tmp.string.str);
+        char* here = find_substring(tmp.get_string());
         if(here){
-            char* ptr = string.str, new_s = new char[get_lenght()-tmp.get_lenght()];
+            char* ptr = get_string(), *new_s = new char[get_lenght()-tmp.get_lenght()];
             int new_l=0;
             while(ptr!=here){
                 new_s[new_l++]=*ptr;
