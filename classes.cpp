@@ -13,7 +13,7 @@ namespace my_string{
         lenght+=--i;
     }
 
-    string::string(char c):{
+    string::string(char c){
         if(!lenght){
             string();
         }
@@ -52,24 +52,35 @@ namespace my_string{
         c == '_' ) ? 0 : 1;
     }
 
-    char delta = 'a' - 'A';
+    char delta = ('a' - 'A')>0? 'a' - 'A': -('a' - 'A');
 
-    if(delta<0){
-        delta*=-1;
-    }
-
-    char* find_substring(const char* ptr){
+    char* string_identifier::find_substring(const char* ptr){
         int i=0;
-        for(int j=0; str[i]; ++i){
-            for(j=0; ptr[j] && str[i+j] && ptr[j]==str[i+j]; ++j){;}
+        char* ptr_str = this->get_string();
+        for(int j=0; ptr_str[i]; ++i){
+            for(j=0; ptr[j] && ptr_str[i+j] && ptr[j]== ptr_str[i+j]; ++j){;}
             if(!ptr[j]){
                 break;
             }
         }
-        return str[i]?&str[i]:nullptr;
+        return ptr_str[i]?&ptr_str[i]:nullptr;
     }
 
     char* remove_substring(const char* ptr){
+        if (!ptr) {
+            return nullptr;
+        }
+        int size_ptr = 0;
+        for (; ptr[size_ptr]; ++size_ptr) { ; }
+        char* str = this->get_string();
+        int size_str = 0;
+        for (; str[size_str]; ++size_str) { ; }
+        if (size_str >= size_ptr) {
+
+        }
+        else {
+
+        }
 
     }
 
@@ -171,6 +182,27 @@ public:
         }
     }
     
-    int string_identifier::operator>(const string_identifier&);
-    int string_identifier::operator<(const string_identifier&);
+    int string_identifier::operator>(const string_identifier& cmpr) {
+        char* ptr = get_string();
+        char* ptr_cmpr = cmpr.get_string();
+
+        while (*ptr == *ptr_cmpr) {
+            ptr++;
+            ptr_cmpr++;
+        }
+
+        return static_cast<int>(*ptr - *ptr_cmpr);
+    }
+
+    int string_identifier::operator<(const string_identifier& cmpr) {
+        char* ptr = get_string();
+        char* ptr_cmpr = cmpr.get_string();
+
+        while (*ptr == *ptr_cmpr) {
+            ptr++;
+            ptr_cmpr++;
+        }
+
+        return static_cast<int>(*ptr-*ptr_cmpr);
+    }
 };
