@@ -25,7 +25,7 @@ namespace my_string{
     str(mom.str), lenght(mom.lenght){}
 
 
-    int string::get_lenght(){
+    int string::get_lenght() const {
         return lenght;
     }
 
@@ -39,10 +39,22 @@ namespace my_string{
         delete str;
     }
 
-    char* string::get_string(){
+    char* string::get_string() const{
         return str;
     }
 
+    void string::set_char(char c) {
+        str[lenght] = c;
+        str[++lenght] = '\0';
+        return;
+    }
+
+    void string::set_string(char*new_string, int new_lenght) {
+        delete str;
+        str = new_string;
+        lenght = new_lenght;
+        return;
+    }
 
     //
     //Definisions of funcs from STRING_IDENTIFIER class
@@ -54,7 +66,7 @@ namespace my_string{
 
     char delta = ('a' - 'A')>0? 'a' - 'A': -('a' - 'A');
 
-    char* string_identifier::find_substring(const char* ptr){
+    char* string_identifier::find_substring(const char* ptr) const {
         int i=0;
         char* ptr_str = this->get_string();
         for(int j=0; ptr_str[i]; ++i){
@@ -66,7 +78,7 @@ namespace my_string{
         return ptr_str[i]?&ptr_str[i]:nullptr;
     }
 
-    char* remove_substring(const char* ptr){
+    /*char* remove_substring(const char* ptr){
         if (!ptr) {
             return nullptr;
         }
@@ -76,86 +88,88 @@ namespace my_string{
         int size_str = 0;
         for (; str[size_str]; ++size_str) { ; }
         if (size_str >= size_ptr) {
-
+            while(str[size_str])
         }
         else {
 
         }
 
-    }
+    }*/
 
-public:
-    string_identifier()
-        : string(){}
+    string_identifier::string_identifier()
+    : string(){}
 
-    string_identifier(char* ptr)
-        :{
-            if(!string.str){
-                string();
+    string_identifier::string_identifier(char* ptr){
+        char* str = get_string();
+            if(str){
+                string_identifier();
             }
             int i=0;
 
             do{
                 if(check_char(ptr[i])){
-                    string.remove_string();
+                    remove_string();
                     i = 0;
                     break;
                 }else{
-                    string(ptr[i]);
+                    set_char(ptr[i]);
                 }
             }while(str[i++]);
-            string.lenght=i?--i:i;
-        }
+            // string.lenght=i?--i:i;
+    }
 
-    string_identifier(char c)
-        :{
-            if(check_char(c)){
-                    string.remove_string();
-                    break;
-                }else{
-                    string(c);
-                }
+    string_identifier::string_identifier(char c){
+        if(check_char(c)){
+            remove_string();
+        }else{
+            set_char(c);
         }
+    }
 
     string_identifier::string_identifier(const string_identifier& dad)
-        :string(dad){}
+        :string(static_cast<const string&>(dad)){
+    }
 
     void string_identifier::uppercase(){
-        for(int i=0; i<lenght:++i){
-            string.str[i]= string.str[i]>UPPER_Z: string.str[i] - delta:
-            string.str[i];
+        int lenght = get_lenght();
+        char* str = get_string();
+        char delta = LOWER_A - UPPER_A > 0 ? LOWER_A - UPPER_A : -(LOWER_A - UPPER_A);
+        for (int i = 0; i < lenght; ++i) {
+            str[i]= str[i]>UPPER_Z ? str[i] - delta : str[i];
         }
         return;
     }
 
     void string_identifier::lowercase(){
-        for(int i=0; i<lenght:++i){
-            string.str[i]= string.str[i]<LOWER_A: string.str[i]+delta :
-            string.str[i];
+        int lenght = get_lenght();
+        char* str = get_string();
+        char delta = LOWER_A - UPPER_A > 0 ? LOWER_A - UPPER_A : -(LOWER_A - UPPER_A);
+        for (int i = 0; i < lenght; ++i) {
+            str[i]= str[i]<LOWER_A ? str[i]+delta : str[i];
         }
         return;
     }
 
     char* string_identifier::find_symbol(char c){
-        char* ptr=string.str;
+        char* ptr=get_string();
         while(*ptr!=c){
             ptr++;
         }
         return ptr;
     }
 
-    string_identifier::~string_identifier{
-        delete string;
-    };
+    // string_identifier::~string_identifier{};
 
     string_identifier& string_identifier::operator=(const string_identifier& init){
-        string_identifier(init);
+        this->set_string(init.get_string(), init.get_lenght());
+        // string_identifier(init);
         return *this;
     };
 
-    string_identifier& string_identifier::operator+(string_identifier&& temp){
-        string* pb = &*this;
-        *pb={temp.get_string()};
+    string_identifier& string_identifier::operator+(string_identifier& temp){
+        this->set_string(temp.get_string(), temp.get_lenght());
+        // string* pb = &*this;
+        // *pb={temp.get_string()};
         return *this;
     };
 
@@ -176,10 +190,10 @@ public:
                 ptr++;
             }
             remove_string();
-            string(new_s);
-            delete new_s;
-            return *this;
+            set_string(new_s, new_l);
+            // delete new_s;
         }
+        return *this;
     }
     
     int string_identifier::operator>(const string_identifier& cmpr) {
