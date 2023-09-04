@@ -1,24 +1,21 @@
 #include "classes.h"
 namespace my_string{
 
-    string::string():
-    str(new char[0]), lenght(0){}
+    string::string()
+        : str(new char[2]), lenght(0) {}
 
     string::string(char* ptr)
         : string(){
-        int i = 0;
         do{
-            str[i]=ptr[i];
-        }while(str[i++]);
-        lenght+=--i;
+            str[lenght]=ptr[lenght];
+        }while(str[lenght++]);
+        --lenght;
     }
 
-    string::string(char c){
-        if(!lenght){
-            string();
-        }
-        str[lenght]=c;
-        str[++lenght]='\0';
+    string::string(char c)
+    :str(new char[2]), lenght(2) {
+        str[0]=c;
+        str[1]='\0';
     }
 
     string::string(const string& mom):
@@ -30,13 +27,14 @@ namespace my_string{
     }
 
     void string::remove_string(){
-        delete str;
+        delete[] str;
         str = nullptr;
         lenght=0;
     }
 
     string::~string(){
-        delete str;
+        delete[] str;
+        lenght = 0;
     }
 
     char* string::get_string() const{
@@ -55,6 +53,8 @@ namespace my_string{
         lenght = new_lenght;
         return;
     }
+
+    char* string::find_substring(const char* ptr) const { return ptr?nullptr:nullptr; }
 
     //
     //Definisions of funcs from STRING_IDENTIFIER class
