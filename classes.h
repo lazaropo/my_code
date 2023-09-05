@@ -7,22 +7,23 @@
 
 namespace my_string{
 class string{
-    char* str;
-    int lenght;
+    char* str=nullptr;
+    int lenght=0;
 protected:
     string();
     string(char* ptr);
     string(char c);
     string(const string&);
-    string(string&&);
-    int get_lenght();
-    void remove_string();
     ~string();
+    int get_lenght() const;
+    void remove_string();
 
-    virtual char* find_substring(const char* ptr);
-    virtual char* remove_substring(const char* ptr);
+    virtual char* find_substring(const char* ptr) const;
+    //virtual char* remove_substring(const char* ptr);
 
-    char* get_string();
+    char* get_string() const;
+    void set_char(char);
+    void set_string(char*, int);
 };
 
 class string_identifier:public string{
@@ -35,14 +36,14 @@ class string_identifier:public string{
     void uppercase();
     void lowercase();
     char* find_symbol(char c);
-    ~string_identifier();
+    ~string_identifier() = default;
 
     string_identifier& operator=(const string_identifier&);
-    string_identifier& operator+(string_identifier&&);
+    string_identifier& operator+(string_identifier&);
     string_identifier& operator-(string_identifier&&);
     int operator>(const string_identifier&);
     int operator<(const string_identifier&);
 
-    char* find_substring(const char* ptr) override;
-    char* remove_substring(const char* ptr) override;
+    char* find_substring(const char* ptr) const override;
+    //char* remove_substring(const char* ptr) override;
 };}
