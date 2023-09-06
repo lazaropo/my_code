@@ -1,6 +1,13 @@
 #include "classes.h"
 namespace my_string{
 
+    void print_string(const char* str, const int lenght) {
+        for (int i = 0; i < lenght; ++i) {
+            cout << str[i];
+        }
+        return;
+    }
+
     string::string()
         : str(new char[2]), lenght(0) {}
 
@@ -158,6 +165,10 @@ namespace my_string{
         return ptr;
     }
 
+    int string_identifier::get_lenght() const {
+        return this->get_lenght();
+    }
+
     // string_identifier::~string_identifier{};
 
     string_identifier& string_identifier::operator=(const string_identifier& init){
@@ -218,5 +229,10 @@ namespace my_string{
         }
 
         return static_cast<int>(*ptr-*ptr_cmpr);
+    }
+
+    std::ostream& string_identifier::operator<<(std::ostream& os, const string_identifier&) {
+        os << print_string(get_string(), get_lenght());
+        return os;
     }
 };
