@@ -8,6 +8,12 @@ namespace my_string{
         return;
     }
 
+    int comparator(const char* str1, const char* str2) const {
+        int i = 0;
+        for (; str1[i] == str2[i]; ++i) { ; }
+        return static_cast<int>(str1[i]) - static_cast<int>(str2[i]);
+    }
+
     string::string()
         : str(new char[2]), lenght(0) {}
 
@@ -63,8 +69,10 @@ namespace my_string{
 
     char* string::find_substring(const char* ptr) const { return ptr?nullptr:nullptr; }
 
+    // int string::comparator(const char* str1, const char* str2) const { return str1 && str2 ? nullptr : nullptr; }
+
     //
-    //Definisions of funcs from STRING_IDENTIFIER class
+    // Definisions of funcs from STRING_IDENTIFIER class
     //
     int string_identifier::check_char(char c){
         return ((c > LOWER_A && c < LOWER_Z)||(c>UPPER_A && c< UPPER_Z) ||
@@ -84,6 +92,8 @@ namespace my_string{
         }
         return ptr_str[i]?&ptr_str[i]:nullptr;
     }
+
+    
 
     /*char* remove_substring(const char* ptr){
         if (!ptr) {

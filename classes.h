@@ -7,6 +7,7 @@
 
 namespace my_string{
     void print_string(const char* str, const int lenght);
+    int comparator(const char* str1, const char* str2) const;
 
 class string{
     char* str=nullptr;
@@ -21,7 +22,8 @@ protected:
     void remove_string();
 
     virtual char* find_substring(const char* ptr) const;
-    //virtual char* remove_substring(const char* ptr);
+    // virtual int comparator(const char* str1, const char* str2) const;
+    // virtual char* remove_substring(const char* ptr);
 
     char* get_string() const;
     void set_char(char);

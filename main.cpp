@@ -44,9 +44,27 @@ int checking_string(const my_string::string_identifier& obj, const char* usr, co
 		string_identifier& lr = {"this is\n STRING"};
 		cout << "String for init: " << "this is\n STRING";
 		// Make string_compare func!!!
-		cout << "Overload of = test: " << ;
-		cout << "String constructor test: "  <<
-			obj.find_symbol(ch) ? print_string(obj.find_symbol(ch), obj.get_lenght()) :
+		cout << "String constructor test: " << 
+		 	comparator(lr.get_string(), { "this is\n STRING" })? "FAIL":"SUCCESS" << endl;
+		// cout << "String constructor test: "  <<
+		//	obj.find_symbol(ch) ? print_string(obj.find_symbol(ch), obj.get_lenght()) :
+	}
+
+	{
+		string_identifier& lr = { 't' };
+		cout << "Char for init: " << 't';
+		// Make string_compare func!!!
+		cout << "Char constructor test: " <<
+			comparator(lr.get_string(), { 't' }) ? "FAIL" : "SUCCESS" << endl;
+	}
+
+	{
+		string_identifier& lr2{ "bebra --- bebra" };
+		string_identifier&  lr1 { lr2 };
+		cout << "String for init: " << "bebra --- bebra" << endl;
+		cout << "Overload for \'=\' operation result: " << lr1 << endl;
+		cout << "Overload for \'=\' operation test result: " << 
+			comparator(lr1.get_string(), { "bebra --- bebra" }) ? "FAIL" : "SUCCESS"
 	}
 	
 
