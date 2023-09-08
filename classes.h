@@ -50,6 +50,7 @@ class string_identifier:public string{
     string_identifier& operator-(string_identifier&&);
     int operator>(const string_identifier&);
     int operator<(const string_identifier&);
+
     std::ostream& operator<<(std::ostream& os, const string_identifier&);
 
     char* find_substring(const char* ptr) const override;

@@ -59,12 +59,22 @@ int checking_string(const my_string::string_identifier& obj, const char* usr, co
 	}
 
 	{
-		string_identifier& lr2{ "bebra --- bebra" };
+		string_identifier& lr2{ "bebra_____BEBRA" };
 		string_identifier&  lr1 { lr2 };
-		cout << "String for init: " << "bebra --- bebra" << endl;
+		cout << "String for init: " << "bebra_____BEBRA" << endl;
 		cout << "Overload for \'=\' operation result: " << lr1 << endl;
-		cout << "Overload for \'=\' operation test result: " << 
-			comparator(lr1.get_string(), { "bebra --- bebra" }) ? "FAIL" : "SUCCESS"
+		cout << "Overload for \'=\' operation test result: " <<
+			comparator(lr1.get_string(), { "bebra_____BEBRA" }) ? "FAIL" : "SUCCESS" << endl;
+		lr1.uppercase();
+		cout << "Uppercase func result: " << 
+			print_string(lr1.get_string(), l1.get_lenght()) << endl;
+		cout << "Uppercase func test: " << 
+			comparator(lr1.get_string(), { "bebra_____bebra" }) ? "FAIL" : "SUCCESS" << endl;
+		lr2.lowercase();
+		cout << "Lowercase func result: " <<
+			print_string(lr2.get_string(), l1.get_lenght()) << endl;
+		cout << "Lowercase func test: " <<
+			comparator(lr2.get_string(), { "bebra_____bebra" }) ? "FAIL" : "SUCCESS" << endl;
 	}
 	
 

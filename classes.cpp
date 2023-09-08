@@ -218,7 +218,7 @@ namespace my_string{
     }
     
     int string_identifier::operator>(const string_identifier& cmpr) {
-        char* ptr = get_string();
+        /*char* ptr = get_string();
         char* ptr_cmpr = cmpr.get_string();
 
         while (*ptr == *ptr_cmpr) {
@@ -226,11 +226,12 @@ namespace my_string{
             ptr_cmpr++;
         }
 
-        return static_cast<int>(*ptr - *ptr_cmpr);
+        return static_cast<int>(*ptr - *ptr_cmpr);*/
+        return comparator(this->get_string(), cmpr.(get_string()));
     }
 
     int string_identifier::operator<(const string_identifier& cmpr) {
-        char* ptr = get_string();
+        /*char* ptr = get_string();
         char* ptr_cmpr = cmpr.get_string();
 
         while (*ptr == *ptr_cmpr) {
@@ -238,7 +239,8 @@ namespace my_string{
             ptr_cmpr++;
         }
 
-        return static_cast<int>(*ptr-*ptr_cmpr);
+        return static_cast<int>(*ptr-*ptr_cmpr);*/
+        return comparator(this->get_string(), cmpr.(get_string()));
     }
 
     std::ostream& string_identifier::operator<<(std::ostream& os, const string_identifier&) {
