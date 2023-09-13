@@ -3,12 +3,12 @@ namespace my_string{
 
     void print_string(const char* str, const int lenght) {
         for (int i = 0; i < lenght; ++i) {
-            cout << str[i];
+            std::cout << str[i];
         }
         return;
     }
 
-    int comparator(const char* str1, const char* str2) const {
+    int comparator(const char* str1, const char* str2) {
         int i = 0;
         for (; str1[i] == str2[i]; ++i) { ; }
         return static_cast<int>(str1[i]) - static_cast<int>(str2[i]);
@@ -176,7 +176,7 @@ namespace my_string{
     }
 
     int string_identifier::get_lenght() const {
-        return this->get_lenght();
+        return string::get_lenght();
     }
 
     // string_identifier::~string_identifier{};
@@ -186,6 +186,15 @@ namespace my_string{
         // string_identifier(init);
         return *this;
     };
+
+    string_identifier& string_identifier::operator=(char* ptr) {
+        int size = 0;
+        while (*(ptr + size)) {
+            ++size;
+        }
+        this->set_string(ptr, size);
+        return *this;
+    }
 
     string_identifier& string_identifier::operator+(string_identifier& temp){
         this->set_string(temp.get_string(), temp.get_lenght());
@@ -227,7 +236,7 @@ namespace my_string{
         }
 
         return static_cast<int>(*ptr - *ptr_cmpr);*/
-        return comparator(this->get_string(), cmpr.(get_string()));
+        return comparator(this->get_string(), cmpr.get_string());
     }
 
     int string_identifier::operator<(const string_identifier& cmpr) {
@@ -240,11 +249,11 @@ namespace my_string{
         }
 
         return static_cast<int>(*ptr-*ptr_cmpr);*/
-        return comparator(this->get_string(), cmpr.(get_string()));
+        return comparator(this->get_string(), cmpr.get_string());
     }
 
-    std::ostream& string_identifier::operator<<(std::ostream& os, const string_identifier&) {
-        os << print_string(get_string(), get_lenght());
+    std::ostream& string_identifier::operator<<(std::ostream& os) {
+        print_string(get_string(), get_lenght());
         return os;
     }
 };

@@ -7,7 +7,7 @@
 
 namespace my_string{
     void print_string(const char* str, const int lenght);
-    int comparator(const char* str1, const char* str2) const;
+    int comparator(const char* str1, const char* str2);
 
 class string{
     char* str=nullptr;
@@ -46,12 +46,13 @@ class string_identifier:public string{
     ~string_identifier() = default;
 
     string_identifier& operator=(const string_identifier&);
+    string_identifier& operator=(char*);
     string_identifier& operator+(string_identifier&);
     string_identifier& operator-(string_identifier&&);
     int operator>(const string_identifier&);
     int operator<(const string_identifier&);
 
-    std::ostream& operator<<(std::ostream& os, const string_identifier&);
+    std::ostream& operator<<(std::ostream&);
 
     char* find_substring(const char* ptr) const override;
     //char* remove_substring(const char* ptr) override;
