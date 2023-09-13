@@ -13,8 +13,8 @@ int main() {
 		while (!(std::cin >> usr_string)) {
 			std::cerr << std::endl << "Wrong string" << std::endl;
 		}
-		*(pps + num_of_strings) = new string_identifier{ usr_string };
-		checking_string(**(pps + num_of_strings), usr_string, 'a'));
+		*(pps + num_of_strings) = &string_identifier{ usr_string };
+		checking_string(static_cast<string_identifier&>(*(pps + num_of_strings)), usr_string, 'a'));
 		
 		++num_of_strings;
 	}
