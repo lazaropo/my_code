@@ -1,10 +1,10 @@
 #include "classes.h"
 
-int checking_string(const my_string::string_identifier& obj, const char*usr);
+int checking_string(my_string::string_identifier& obj, const char* usr, const char ch);
 
 int main() {
 	using namespace my_string;
-	string** pps = new  (string*[2]);
+	string** pps = new string*[2];
 	int num_of_strings = 0;
 
 	while (true) {
@@ -13,20 +13,24 @@ int main() {
 		while (!(std::cin >> usr_string)) {
 			std::cerr << std::endl << "Wrong string" << std::endl;
 		}
-		*pps[num_of_strings] = new string_identifier;
-		*pps[num_of_strings] = usr_string;
+		*(pps + num_of_strings) = new string_identifier{ usr_string };
+		checking_string(**(pps + num_of_strings), usr_string, 'a'));
+		
 		++num_of_strings;
 	}
+	// checking_string()
 	return 0;
 }
 
-int checking_string(const my_string::string_identifier& obj, const char* usr, const char ch) {
+int checking_string(my_string::string_identifier& obj, const char* usr, const char ch) {
 	using namespace std;
 	using namespace my_string;
 	cout << usr << endl;
 	cout << obj << endl ;
-	cout << "Uppercase test: " << obj.uppercase()<< endl;
-	cout << "Lowercase test: " << obj.lowercase() << endl;
+	obj.uppercase();
+	cout << "Uppercase test: " << obj << endl;
+	obj.lowercase();
+	cout << "Lowercase test: " << obj << endl;
 	cout << "First char \'" << ch << " \' in string:" << 
 		obj.find_symbol(ch) ? print_string(obj.find_symbol(ch), obj.get_lenght()) : "NULLPTR" << endl;
 

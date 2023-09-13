@@ -252,8 +252,8 @@ namespace my_string{
         return comparator(this->get_string(), cmpr.get_string());
     }
 
-    std::ostream& string_identifier::operator<<(std::ostream& os) {
-        print_string(get_string(), get_lenght());
-        return os;
+    std::ostream& string_identifier::operator<<(std::ostream& to, const string_identifier& obj) {
+        print_string(obj.get_string(), obj.get_lenght());
+        return to;
     }
 };
