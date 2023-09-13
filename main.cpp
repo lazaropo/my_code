@@ -76,6 +76,27 @@ int checking_string(const my_string::string_identifier& obj, const char* usr, co
 		cout << "Lowercase func test: " <<
 			comparator(lr2.get_string(), { "bebra_____bebra" }) ? "FAIL" : "SUCCESS" << endl;
 	}
+
+	{
+		string_identifier& lr1{ "bebra1___" };
+		string_identifier& lr2{ "bebra2___" };
+		string_identifier& lr3 = lr1 + lr2;
+		cout << "Overload for \'+\' operation result: " <<
+			lr3 << endl;
+		cout << "Overload for \'+\' operation test result: " <<
+			comparator(lr3.get_string(), { "bebra1___bebra2___" }) ? "FAIL" : "SUCCESS" << endl;
+		lr3 = lr3 - string_identifier{"bebra"};
+		cout << "Overload for \'-\' operation result: " <<
+			lr3 << endl;
+		cout << "Overload for \'-\' operation test result: " <<
+			comparator(lr3.get_string(), { "1___2___" }) ? "FAIL" : "SUCCESS" << endl;
+		cout << "Overload for \'>\' operation test result: " <<
+			(lr3 > string_identifier{"22"} == '2' - '1') &&
+			!(lr3 > string_identifier{"11"}) ? "SUCCESS" : "FAIL" << endl;
+		cout << "Overload for \'<\' operation test result: " <<
+			(lr3 < string_identifier{"00"} == '2' - '1') &&
+			!(lr3 < string_identifier{"11"}) ? "SUCCESS" : "FAIL" << endl; ? "SUCCESS" : "FAIL" << endl;
+	}
 	
 
 }
