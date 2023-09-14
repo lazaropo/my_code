@@ -1,9 +1,12 @@
 #include "classes.h"
 namespace my_string{
 
-    void print_string(const char* str, const int lenght) {
+    void print_string(const char* str, const int lenght, std::ostream& to) {
+        if (!str) {
+            return;
+        }
         for (int i = 0; i < lenght; ++i) {
-            std::cout << str[i];
+            to << str[i];
         }
         return;
     }
@@ -68,6 +71,11 @@ namespace my_string{
     }
 
     char* string::find_substring(const char* ptr) const { return ptr?nullptr:nullptr; }
+
+    std::ostream& operator<<(std::ostream& to, const string& obj) {
+        print_string(obj.get_string(), obj.get_lenght(), to);
+        return to;
+    }
 
     // int string::comparator(const char* str1, const char* str2) const { return str1 && str2 ? nullptr : nullptr; }
 
@@ -252,8 +260,8 @@ namespace my_string{
         return comparator(this->get_string(), cmpr.get_string());
     }
 
-    std::ostream& string_identifier::operator<<(std::ostream& to, const string_identifier& obj) {
-        print_string(obj.get_string(), obj.get_lenght());
+    std::ostream& operator<<(std::ostream& to, const string_identifier& obj) {
+        print_string(obj.get_string(), obj.get_lenght(), to);
         return to;
     }
 };

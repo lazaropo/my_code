@@ -1,6 +1,6 @@
 #include "classes.h"
 
-int checking_string(my_string::string_identifier& obj, const char* usr, const char ch);
+int checking_string(my_string::string& obj, const char* usr, const char ch);
 
 int main() {
 	using namespace my_string;
@@ -13,8 +13,9 @@ int main() {
 		while (!(std::cin >> usr_string)) {
 			std::cerr << std::endl << "Wrong string" << std::endl;
 		}
-		*(pps + num_of_strings) = &string_identifier{ usr_string };
-		checking_string(static_cast<string_identifier&>(*(pps + num_of_strings)), usr_string, 'a'));
+		string_identifier obj{ usr_string };
+		*(pps + num_of_strings) = &obj;
+		checking_string(*(*pps + num_of_strings), usr_string, 'a');
 		
 		++num_of_strings;
 	}
@@ -22,7 +23,7 @@ int main() {
 	return 0;
 }
 
-int checking_string(my_string::string_identifier& obj, const char* usr, const char ch) {
+int checking_string(my_string::string& obj, const char* usr, const char ch) {
 	using namespace std;
 	using namespace my_string;
 	cout << usr << endl;
