@@ -1,5 +1,23 @@
-#include "classes.h"
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+// Задание:
+// Сделать базовый класс стринга и дочерний класс стринга_идентификатор 
+// (идентиф это строка из a-z, A-Z и '_').
+// написать конструкторы - по умолчанию, символом, строкой, конструктор копирования в двух классах.
+// В дочернем классе реализовать функции обработки строки:
+// 1 - перевод всех букв в верхний регистр
+// 2 - перевод всех букв в нижний регистр
+// В дочернем классе реализовать перегрузки арифметических операций:
+// + - склеивание второй строки к первой
+// - - нахождение первого вхождения строки слева в строке справа и удаление её
+// > - вернуть разницу между первой и второй строкой
+// < - вернуть разницу между первой и второй строкой
+// В задании перегрузки сравнения ничем не отличаются, очень странно. 
+// Фактически, это один и тот же компаратор)
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
+#include "classes.h"
 int checking_string(my_string::string& obj, const char* usr, const char ch);
 
 int main() {
@@ -15,17 +33,20 @@ int main() {
 		}
 		string_identifier obj{ usr_string };
 		*(pps + num_of_strings) = &obj;
-		checking_string(*(*pps + num_of_strings), usr_string, 'a');
+		if (checking_string(*(*pps + num_of_strings), usr_string, 'a')) {
+			std::cerr << "Here some errors" << std::endl;
+		}
 		
 		++num_of_strings;
 	}
-	// checking_string()
+	// if (checking_string())
 	return 0;
 }
 
 int checking_string(my_string::string& obj, const char* usr, const char ch) {
 	using namespace std;
 	using namespace my_string;
+	int e_code = 0;
 	cout << usr << endl;
 	cout << obj << endl ;
 	obj.uppercase();
@@ -42,7 +63,7 @@ int checking_string(my_string::string& obj, const char* usr, const char ch) {
 		string_identifier lr={};
 		ptr = &lr;
 		cout << "Empty constructor test: " <<
-			(obj.get_string() && obj.get_lenght() ? "SUCCESS" : "FAIL") << endl;
+			(obj.get_string() && obj.get_lenght() ? "SUCCESS" : (e_code++, "FAIL")) << endl;
 	}
 
 	cout << "Destroyer test: " << (ptr ? "FAIL" : "SUCCESS") << endl;
@@ -54,7 +75,7 @@ int checking_string(my_string::string& obj, const char* usr, const char ch) {
 		cout << "String for init: " << "this is\n STRING";
 		// Make string_compare func!!!
 		cout << "String constructor test: " << 
-			(comparator(lr.get_string(), { "this is\n STRING" }) ? "FAIL" : "SUCCESS") << endl;
+			(comparator(lr.get_string(), { "this is\n STRING" }) ? (e_code++, "FAIL") : "SUCCESS") << endl;
 		// cout << "String constructor test: "  <<
 		//	obj.find_symbol(ch) ? print_string(obj.find_symbol(ch), obj.get_lenght()) :
 	}
@@ -76,39 +97,51 @@ int checking_string(my_string::string& obj, const char* usr, const char ch) {
 		cout << "String for init: " << "bebra_____BEBRA" << endl;
 		cout << "Overload for \'=\' operation result: " << lr1 << endl;
 		cout << "Overload for \'=\' operation test result: " <<
-			(comparator(lr1.get_string(), { "bebra_____BEBRA" }) ? "FAIL" : "SUCCESS") << endl;
+			(comparator(lr1.get_string(), { "bebra_____BEBRA" }) ? 
+				(e_code++, "FAIL") : "SUCCESS") << endl;
 		lr1.uppercase();
 		cout << "Uppercase func result: " << 
-			print_string(lr1.get_string(), lr1.get_lenght()) << endl;
+			lr1 << endl;
 		cout << "Uppercase func test: " << 
-			(comparator(lr1.get_string(), { "bebra_____bebra" }) ? "FAIL" : "SUCCESS") << endl;
+			(comparator(lr1.get_string(), { "bebra_____bebra" }) ? 
+				(e_code++, "FAIL") : "SUCCESS") << endl;
 		lr2.lowercase();
 		cout << "Lowercase func result: " <<
-			print_string(lr2.get_string(), lr1.get_lenght()) << endl;
+			lr2 << endl;
 		cout << "Lowercase func test: " <<
-			(comparator(lr2.get_string(), { "bebra_____bebra" }) ? "FAIL" : "SUCCESS") << endl;
+			(comparator(lr2.get_string(), { "bebra_____bebra" }) ?
+				(e_code++, "FAIL") : "SUCCESS") << endl;
 	}
 
 	{
-		string_identifier& lr1{ "bebra1___" };
-		string_identifier& lr2{ "bebra2___" };
+		char str1[] = "bebra1___";
+		char str2[] = "bebra2___";
+		string_identifier tmp1(str1);
+		string_identifier tmp2(str2);
+		string_identifier& lr1=tmp1;
+		string_identifier& lr2=tmp2;
 		string_identifier& lr3 = lr1 + lr2;
 		cout << "Overload for \'+\' operation result: " <<
 			lr3 << endl;
 		cout << "Overload for \'+\' operation test result: " <<
-			(comparator(lr3.get_string(), { "bebra1___bebra2___" }) ? "FAIL" : "SUCCESS") << endl;
-		lr3 = lr3 - string_identifier{"bebra"};
+			(comparator(lr3.get_string(), { "bebra1___bebra2___" }) ? (e_code++, "FAIL") : "SUCCESS") << endl;
+		char str3[] = "bebra";
+		lr3 = lr3 - string_identifier{str3};
 		cout << "Overload for \'-\' operation result: " <<
 			lr3 << endl;
 		cout << "Overload for \'-\' operation test result: " <<
-			(comparator(lr3.get_string(), { "1___2___" }) ? "FAIL" : "SUCCESS") << endl;
+			(comparator(lr3.get_string(), { "1___2___" }) ? (e_code++, "FAIL") : "SUCCESS") << endl;
+		char num1[] = "22";
+		char num2[] = "11";
+		char num3[] = "00";
+		//	char num4[]=
 		cout << "Overload for \'>\' operation test result: " <<
-			(lr3 > string_identifier{"22"} == '2' - '1') &&
-			!(lr3 > string_identifier{"11"}) ? "SUCCESS" : "FAIL" << endl;
+			((lr3 > string_identifier{num1}) == '2' - '1' &&
+				!(lr3 > string_identifier{num2}) ? "SUCCESS" : (e_code++, "FAIL")) << endl;
 		cout << "Overload for \'<\' operation test result: " <<
-			(lr3 < string_identifier{"00"} == '2' - '1') &&
-			!(lr3 < string_identifier{"11"}) ? "SUCCESS" : "FAIL" << endl; ? "SUCCESS" : "FAIL" << endl;
+			((lr3 < string_identifier{num3}) == '2' - '1' &&
+				!(lr3 < string_identifier{num2}) ? "SUCCESS" : (e_code++, "FAIL")) << endl;
 	}
 	
-
+	return e_code;
 }
