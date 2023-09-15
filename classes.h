@@ -6,7 +6,7 @@
 #define UPPER_Z 'Z'
 
 namespace my_string{
-    void print_string(const char* str, const int lenght, std::ostream& = std::cout);
+    std::ostream& print_string(const char* str, const int lenght, std::ostream& = std::cout);
     int comparator(const char* str1, const char* str2);
 
     class string_identifier;
@@ -24,10 +24,15 @@ protected:
     void remove_string();
 
     virtual char* find_substring(const char* ptr) const;
+    
     // virtual int comparator(const char* str1, const char* str2) const;
     // virtual char* remove_substring(const char* ptr);
     public:
     int get_lenght() const;
+    virtual void uppercase();
+    virtual char* find_symbol(char c);
+    virtual void lowercase();
+
     char* get_string() const;
     protected:
     void set_char(char);
@@ -44,9 +49,10 @@ class string_identifier:public string{
     string_identifier(char c);
     string_identifier(const string_identifier&);
 
-    void uppercase();
-    void lowercase();
-    char* find_symbol(char c);
+    void uppercase() override;
+    void lowercase() override;
+
+    char* find_symbol(char c) override;
     int get_lenght() const;
 
     ~string_identifier() = default;
