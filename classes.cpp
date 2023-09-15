@@ -1,14 +1,14 @@
 #include "classes.h"
 namespace my_string{
 
-    void print_string(const char* str, const int lenght, std::ostream& to) {
+    std::ostream& print_string(const char* str, const int lenght, std::ostream& to) {
         if (!str) {
-            return;
+            return to;
         }
         for (int i = 0; i < lenght; ++i) {
             to << str[i];
         }
-        return;
+        return to;
     }
 
     int comparator(const char* str1, const char* str2) {
