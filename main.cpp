@@ -17,15 +17,18 @@
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
+
 #include "classes.h"
 int checking_string(my_string::string& obj, const char* usr, const char ch);
 
 int main() {
 	using namespace my_string;
-	string** pps = new string*[2];
+	string* pps = string_identifier{"test"};
 	int num_of_strings = 0;
-
+	if (checking_string(*pps, "test", 'a')) {
+		std::cerr << "Here some errors" << std::endl;
+	}
+	/*
 	while (true) {
 		int size_ = 10;
 		char* usr_string = new char[size_];
@@ -40,6 +43,7 @@ int main() {
 		
 		++num_of_strings;
 	}
+	*/
 	// if (checking_string())
 	return 0;
 }
@@ -145,7 +149,7 @@ int checking_string(my_string::string& obj, const char* usr, const char ch) {
 	}
 	
 	return e_code;
-=======
+
 int checking_string(const my_string::string_identifier &obj, const char *usr);
 
 int main() {
@@ -199,5 +203,5 @@ int checking_string(const my_string::string_identifier &obj, const char *usr,
         ? print_string(obj.find_symbol(ch), obj.get_lenght())
         :
   }
->>>>>>> eed27bc85d40a7c49a0ed83e0bb6f183ce277a6a
+
 }

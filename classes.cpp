@@ -10,7 +10,7 @@ void print_string(const char *str, const int lenght) {
 
 string::string() : str(new char[2]), lenght(0) {}
 
-string::string(char *ptr, int l) : string(new char[l]), lenght(l) {
+string::string(const char *ptr, int l) : str(new char[l]), lenght(l) {
     for (int i = 0; i < l; ++i)
         str[i] = ptr[i];
 }
@@ -19,8 +19,9 @@ string::string(char c) : str(new char[1]), lenght(1) {
   str[0] = c;
 }
 
-string::string(const string &parent) : string(parent.get_string()), 
-    lenght(parent.get_lenght() {}
+string::string(const string &parent) : 
+    string::string(parent.get_string(), parent.get_lenght()), 
+    lenght(parent.get_lenght()) {}
 
 int string::get_lenght() const { return lenght; }
 
@@ -37,7 +38,7 @@ string::~string() {
 
 char *string::get_string() const { return str; }
 
-void string::set_char(char c) {
+void string::set_char(char c){
   str[lenght] = c;
   str[++lenght] = '\0';
   return;
@@ -48,10 +49,6 @@ void string::set_string(char *new_string, int new_lenght) {
   str = new_string;
   lenght = new_lenght;
   return;
-}
-
-char *string::find_substring(const char *ptr) const {
-  return ptr ? nullptr : nullptr;
 }
 
 //
@@ -254,7 +251,7 @@ int string_identifier::operator<(const string_identifier &cmpr) {
     }
 
     char delta = ('a' - 'A')>0? 'a' - 'A': -('a' - 'A');
-
+    /*
     char* string_identifier::find_substring(const char* ptr) const {
         int i=0;
         char* ptr_str = this->get_string();
@@ -266,7 +263,7 @@ int string_identifier::operator<(const string_identifier &cmpr) {
         }
         return ptr_str[i]?&ptr_str[i]:nullptr;
     }
-
+    */
     
 
     /*char* remove_substring(const char* ptr){
