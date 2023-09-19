@@ -1,61 +1,61 @@
 #include "classes.h"
 namespace my_string {
 
-void print_string(const char *str, const int lenght) {
-  for (int i = 0; i < lenght; ++i) {
-    std::cout << str[i];
+void print_string(const char *mpstring, const int mlenght) {
+  for (int i = 0; i < mlenght; ++i) {
+    std::cout << mpstring[i];
   }
   return;
 }
 
-string::string() : str(new char[2]), lenght(0) {}
+String::String() : mpstring(new char[2]), mlenght(0) {}
 
-string::string(const char *ptr, int l) : str(new char[l]), lenght(l) {
+String::String(const char *ptr, int l) : mpstring(new char[l]), mlenght(l) {
     for (int i = 0; i < l; ++i)
-        str[i] = ptr[i];
+        mpstring[i] = ptr[i];
 }
 
-string::string(char c) : str(new char[1]), lenght(1) {
-  str[0] = c;
+String::String(char c) : mpstring(new char[1]), mlenght(1) {
+  mpstring[0] = c;
 }
 
-string::string(const string &parent) : 
-    string::string(parent.get_string(), parent.get_lenght()), 
-    lenght(parent.get_lenght()) {}
+String::String(const String &parent) : 
+    String::String(parent.iGetGtring(), parent.iGetLenght()), 
+    mlenght(parent.iGetLenght()) {}
 
-int string::get_lenght() const { return lenght; }
+int String::iGetLenght() const { return mlenght; }
 
-void string::remove_string() {
-  delete[] str;
-  str = nullptr;
-  lenght = 0;
+void String::RemoveString() {
+  delete[] mpstring;
+  mpstring = nullptr;
+  mlenght = 0;
 }
 
-string::~string() {
-  delete[] str;
-  lenght = 0;
+String::~String() {
+  delete[] mpstring;
+  mlenght = 0;
 }
 
-char *string::get_string() const { return str; }
+char *String::iGetGtring() const { return mpstring; }
 
-void string::set_char(char c){
-  str[lenght] = c;
-  str[++lenght] = '\0';
+void String::SetChar(char c){
+  mpstring[mlenght] = c;
+  mpstring[++mlenght] = '\0';
   return;
 }
 
-void string::set_string(char *new_string, int new_lenght) {
-  delete str;
-  str = new_string;
-  lenght = new_lenght;
+void String::SetString(char *new_string, int new_lenght) {
+  delete mpstring;
+  mpstring = new_string;
+  mlenght = new_lenght;
   return;
 }
 
 //
 // Definisions of funcs from STRING_IDENTIFIER class
 //
-int string_identifier::check_char(char c) {
-  return ((c > LOWER_A && c < LOWER_Z) || (c > UPPER_A && c < UPPER_Z) ||
+int StringIdentifier::CheckChar(char c) {
+  return ((c > kLowerA && c < kLowerZ) || (c > kUpperA && c < kUpperZ) ||
           c == '_')
              ? 0
              : 1;
@@ -63,9 +63,9 @@ int string_identifier::check_char(char c) {
 
 char delta = ('a' - 'A') > 0 ? 'a' - 'A' : -('a' - 'A');
 
-char *string_identifier::find_substring(const char *ptr) const {
+char *StringIdentifier::iFindSubstring(const char *ptr) const {
   int i = 0;
-  char *ptr_str = this->get_string();
+  char *ptr_str = this->iGetGtring();
   for (int j = 0; ptr_str[i]; ++i) {
     for (j = 0; ptr[j] && ptr_str[i + j] && ptr[j] == ptr_str[i + j]; ++j) {
       ;
@@ -83,21 +83,21 @@ char *string_identifier::find_substring(const char *ptr) const {
     }
     int size_ptr = 0;
     for (; ptr[size_ptr]; ++size_ptr) { ; }
-    char* str = this->get_string();
+    char* mpstring = this->iGetGtring();
     int size_str = 0;
-    for (; str[size_str]; ++size_str) { ; }
+    for (; mpstring[size_str]; ++size_str) { ; }
     if (size_str >= size_ptr) {
-        while(str[size_str])
+        while(mpstring[size_str])
     }
     else {
 
 <<<<<<< HEAD
-    std::ostream& print_string(const char* str, const int lenght, std::ostream& to) {
-        if (!str) {
+    std::ostream& print_string(const char* mpstring, const int mlenght, std::ostream& to) {
+        if (!mpstring) {
             return to;
         }
-        for (int i = 0; i < lenght; ++i) {
-            to << str[i];
+        for (int i = 0; i < mlenght; ++i) {
+            to << mpstring[i];
         }
         return to;
     }
@@ -112,88 +112,88 @@ char *string_identifier::find_substring(const char *ptr) const {
 
 }*/
 
-string_identifier::string_identifier() : string() {}
+StringIdentifier::StringIdentifier() : String() {}
 
-string_identifier::string_identifier(char *ptr) {
-  char *str = get_string();
-  if (str) {
-    string_identifier();
+StringIdentifier::StringIdentifier(char *ptr) {
+  char *mpstring = iGetGtring();
+  if (mpstring) {
+    StringIdentifier();
   }
   int i = 0;
 
   do {
-    if (check_char(ptr[i])) {
-      remove_string();
+    if (CheckChar(ptr[i])) {
+      RemoveString();
       i = 0;
       break;
     } else {
-      set_char(ptr[i]);
+      SetChar(ptr[i]);
     }
-  } while (str[i++]);
-  // string.lenght=i?--i:i;
+  } while (mpstring[i++]);
+  // string.mlenght=i?--i:i;
 }
 
-string_identifier::string_identifier(char c) {
-  if (check_char(c)) {
-    remove_string();
+StringIdentifier::StringIdentifier(char c) {
+  if (CheckChar(c)) {
+    RemoveString();
   } else {
-    set_char(c);
+    SetChar(c);
   }
 }
 
-string_identifier::string_identifier(const string_identifier &dad)
-    : string(static_cast<const string &>(dad)) {}
+StringIdentifier::StringIdentifier(const StringIdentifier &dad)
+    : String(static_cast<const String &>(dad)) {}
 
-void string_identifier::uppercase() {
-  int lenght = get_lenght();
-  char *str = get_string();
-  char delta = LOWER_A - UPPER_A > 0 ? LOWER_A - UPPER_A : -(LOWER_A - UPPER_A);
-  for (int i = 0; i < lenght; ++i) {
-    str[i] = str[i] > UPPER_Z ? str[i] - delta : str[i];
-  }
-  return;
-}
-
-void string_identifier::lowercase() {
-  int lenght = get_lenght();
-  char *str = get_string();
-  char delta = LOWER_A - UPPER_A > 0 ? LOWER_A - UPPER_A : -(LOWER_A - UPPER_A);
-  for (int i = 0; i < lenght; ++i) {
-    str[i] = str[i] < LOWER_A ? str[i] + delta : str[i];
+void StringIdentifier::iSetUppercase() {
+  int mlenght = iGetLenght();
+  char *mpstring = iGetGtring();
+  char delta = kLowerA - kUpperA > 0 ? kLowerA - kUpperA : -(kLowerA - kUpperA);
+  for (int i = 0; i < mlenght; ++i) {
+    mpstring[i] = mpstring[i] > kUpperZ ? mpstring[i] - delta : mpstring[i];
   }
   return;
 }
 
-char *string_identifier::find_symbol(char c) {
-  char *ptr = get_string();
+void StringIdentifier::iSetLowercase() {
+  int mlenght = iGetLenght();
+  char *mpstring = iGetGtring();
+  char delta = kLowerA - kUpperA > 0 ? kLowerA - kUpperA : -(kLowerA - kUpperA);
+  for (int i = 0; i < mlenght; ++i) {
+    mpstring[i] = mpstring[i] < kLowerA ? mpstring[i] + delta : mpstring[i];
+  }
+  return;
+}
+
+char *StringIdentifier::iFindSymbol(char c) {
+  char *ptr = iGetGtring();
   while (*ptr != c) {
     ptr++;
   }
   return ptr;
 }
 
-int string_identifier::get_lenght() const { return this->get_lenght(); }
+int StringIdentifier::iGetLenght() const { return this->iGetLenght(); }
 
 // string_identifier::~string_identifier{};
 
-string_identifier &string_identifier::operator=(const string_identifier &init) {
-  this->set_string(init.get_string(), init.get_lenght());
+StringIdentifier &StringIdentifier::operator=(const StringIdentifier &init) {
+  this->SetString(init.iGetGtring(), init.iGetLenght());
   // string_identifier(init);
   return *this;
 };
 
-string_identifier &string_identifier::operator+(string_identifier &temp) {
-  this->set_string(temp.get_string(), temp.get_lenght());
+StringIdentifier &StringIdentifier::operator+(StringIdentifier &temp) {
+  this->SetString(temp.iGetGtring(), temp.iGetLenght());
   // string* pb = &*this;
-  // *pb={temp.get_string()};
+  // *pb={temp.iGetGtring()};
   return *this;
 };
 
-string_identifier &string_identifier::operator-(string_identifier &&tmp) {
-  char *here = find_substring(tmp.get_string());
+StringIdentifier &StringIdentifier::operator-(StringIdentifier &&tmp) {
+  char *here = iFindSubstring(tmp.iGetGtring());
   if (here) {
-    char *ptr = get_string(),
-         *new_s = new char[get_lenght() - tmp.get_lenght()];
+    char *ptr = iGetGtring(),
+         *new_s = new char[iGetLenght() - tmp.iGetLenght()];
     int new_l = 0;
     while (ptr != here) {
       new_s[new_l++] = *ptr;
@@ -206,16 +206,16 @@ string_identifier &string_identifier::operator-(string_identifier &&tmp) {
       new_s[new_l++] = *ptr;
       ptr++;
     }
-    remove_string();
-    set_string(new_s, new_l);
+    RemoveString();
+    SetString(new_s, new_l);
     // delete new_s;
   }
   return *this;
 }
 
-int string_identifier::operator>(const string_identifier &cmpr) {
-  char *ptr = get_string();
-  char *ptr_cmpr = cmpr.get_string();
+int StringIdentifier::operator>(const StringIdentifier &cmpr) {
+  char *ptr = iGetGtring();
+  char *ptr_cmpr = cmpr.iGetGtring();
 
   while (*ptr == *ptr_cmpr) {
     ptr++;
@@ -225,9 +225,9 @@ int string_identifier::operator>(const string_identifier &cmpr) {
   return static_cast<int>(*ptr - *ptr_cmpr);
 }
 
-int string_identifier::operator<(const string_identifier &cmpr) {
-  char *ptr = get_string();
-  char *ptr_cmpr = cmpr.get_string();
+int StringIdentifier::operator<(const StringIdentifier &cmpr) {
+  char *ptr = iGetGtring();
+  char *ptr_cmpr = cmpr.iGetGtring();
 
   while (*ptr == *ptr_cmpr) {
     ptr++;
@@ -235,8 +235,8 @@ int string_identifier::operator<(const string_identifier &cmpr) {
   }
 
 <<<<<<< HEAD
-    std::ostream& operator<<(std::ostream& to, const string& obj) {
-        print_string(obj.get_string(), obj.get_lenght(), to);
+    std::ostream& operator<<(std::ostream& to, const String& obj) {
+        print_string(obj.iGetGtring(), obj.iGetLenght(), to);
         return to;
     }
 
@@ -245,16 +245,16 @@ int string_identifier::operator<(const string_identifier &cmpr) {
     //
     // Definisions of funcs from STRING_IDENTIFIER class
     //
-    int string_identifier::check_char(char c){
-        return ((c > LOWER_A && c < LOWER_Z)||(c>UPPER_A && c< UPPER_Z) ||
+    int StringIdentifier::CheckChar(char c){
+        return ((c > kLowerA && c < kLowerZ)||(c>kUpperA && c< kUpperZ) ||
         c == '_' ) ? 0 : 1;
     }
 
     char delta = ('a' - 'A')>0? 'a' - 'A': -('a' - 'A');
     /*
-    char* string_identifier::find_substring(const char* ptr) const {
+    char* string_identifier::iFindSubstring(const char* ptr) const {
         int i=0;
-        char* ptr_str = this->get_string();
+        char* ptr_str = this->iGetGtring();
         for(int j=0; ptr_str[i]; ++i){
             for(j=0; ptr[j] && ptr_str[i+j] && ptr[j]== ptr_str[i+j]; ++j){;}
             if(!ptr[j]){
@@ -272,11 +272,11 @@ int string_identifier::operator<(const string_identifier &cmpr) {
         }
         int size_ptr = 0;
         for (; ptr[size_ptr]; ++size_ptr) { ; }
-        char* str = this->get_string();
+        char* mpstring = this->iGetGtring();
         int size_str = 0;
-        for (; str[size_str]; ++size_str) { ; }
+        for (; mpstring[size_str]; ++size_str) { ; }
         if (size_str >= size_ptr) {
-            while(str[size_str])
+            while(mpstring[size_str])
         }
         else {
 
@@ -284,100 +284,100 @@ int string_identifier::operator<(const string_identifier &cmpr) {
 
     }*/
 
-    string_identifier::string_identifier()
-    : string(){}
+    StringIdentifier::StringIdentifier()
+    : String(){}
 
-    string_identifier::string_identifier(char* ptr){
-        char* str = get_string();
-            if(str){
-                string_identifier();
+    StringIdentifier::StringIdentifier(char* ptr){
+        char* mpstring = iGetGtring();
+            if(mpstring){
+                StringIdentifier();
             }
             int i=0;
 
             do{
-                if(check_char(ptr[i])){
-                    remove_string();
+                if(CheckChar(ptr[i])){
+                    RemoveString();
                     i = 0;
                     break;
                 }else{
-                    set_char(ptr[i]);
+                    SetChar(ptr[i]);
                 }
-            }while(str[i++]);
-            // string.lenght=i?--i:i;
+            }while(mpstring[i++]);
+            // string.mlenght=i?--i:i;
     }
 
-    string_identifier::string_identifier(char c){
-        if(check_char(c)){
-            remove_string();
+    StringIdentifier::StringIdentifier(char c){
+        if(CheckChar(c)){
+            RemoveString();
         }else{
-            set_char(c);
+            SetChar(c);
         }
     }
 
-    string_identifier::string_identifier(const string_identifier& dad)
-        :string(static_cast<const string&>(dad)){
+    StringIdentifier::StringIdentifier(const StringIdentifier& dad)
+        :String(static_cast<const String&>(dad)){
     }
 
-    void string_identifier::uppercase(){
-        int lenght = get_lenght();
-        char* str = get_string();
-        char delta = LOWER_A - UPPER_A > 0 ? LOWER_A - UPPER_A : -(LOWER_A - UPPER_A);
-        for (int i = 0; i < lenght; ++i) {
-            str[i]= str[i]>UPPER_Z ? str[i] - delta : str[i];
-        }
-        return;
-    }
-
-    void string_identifier::lowercase(){
-        int lenght = get_lenght();
-        char* str = get_string();
-        char delta = LOWER_A - UPPER_A > 0 ? LOWER_A - UPPER_A : -(LOWER_A - UPPER_A);
-        for (int i = 0; i < lenght; ++i) {
-            str[i]= str[i]<LOWER_A ? str[i]+delta : str[i];
+    void StringIdentifier::iSetUppercase(){
+        int mlenght = iGetLenght();
+        char* mpstring = iGetGtring();
+        char delta = kLowerA - kUpperA > 0 ? kLowerA - kUpperA : -(kLowerA - kUpperA);
+        for (int i = 0; i < mlenght; ++i) {
+            mpstring[i]= mpstring[i]>kUpperZ ? mpstring[i] - delta : mpstring[i];
         }
         return;
     }
 
-    char* string_identifier::find_symbol(char c){
-        char* ptr=get_string();
+    void StringIdentifier::iSetLowercase(){
+        int mlenght = iGetLenght();
+        char* mpstring = iGetGtring();
+        char delta = kLowerA - kUpperA > 0 ? kLowerA - kUpperA : -(kLowerA - kUpperA);
+        for (int i = 0; i < mlenght; ++i) {
+            mpstring[i]= mpstring[i]<kLowerA ? mpstring[i]+delta : mpstring[i];
+        }
+        return;
+    }
+
+    char* StringIdentifier::iFindSymbol(char c){
+        char* ptr=iGetGtring();
         while(*ptr!=c){
             ptr++;
         }
         return ptr;
     }
 
-    int string_identifier::get_lenght() const {
-        return string::get_lenght();
+    int StringIdentifier::iGetLenght() const {
+        return String::iGetLenght();
     }
 
     // string_identifier::~string_identifier{};
 
-    string_identifier& string_identifier::operator=(const string_identifier& init){
-        this->set_string(init.get_string(), init.get_lenght());
+    StringIdentifier& StringIdentifier::operator=(const StringIdentifier& init){
+        this->SetString(init.iGetGtring(), init.iGetLenght());
         // string_identifier(init);
         return *this;
     };
 
-    string_identifier& string_identifier::operator=(char* ptr) {
+    StringIdentifier& StringIdentifier::operator=(char* ptr) {
         int size = 0;
         while (*(ptr + size)) {
             ++size;
         }
-        this->set_string(ptr, size);
+        this->SetString(ptr, size);
         return *this;
     }
 
-    string_identifier& string_identifier::operator+(string_identifier& temp){
-        this->set_string(temp.get_string(), temp.get_lenght());
+    StringIdentifier& StringIdentifier::operator+(StringIdentifier& temp){
+        this->SetString(temp.iGetGtring(), temp.iGetLenght());
         // string* pb = &*this;
-        // *pb={temp.get_string()};
+        // *pb={temp.iGetGtring()};
         return *this;
     };
 
-    string_identifier& string_identifier::operator-(string_identifier&& tmp){
-        char* here = find_substring(tmp.get_string());
+    StringIdentifier& StringIdentifier::operator-(StringIdentifier&& tmp){
+        char* here = iFindSubstring(tmp.iGetGtring());
         if(here){
-            char* ptr = get_string(), *new_s = new char[get_lenght()-tmp.get_lenght()];
+            char* ptr = iGetGtring(), *new_s = new char[iGetLenght()-tmp.iGetLenght()];
             int new_l=0;
             while(ptr!=here){
                 new_s[new_l++]=*ptr;
@@ -390,16 +390,16 @@ int string_identifier::operator<(const string_identifier &cmpr) {
                 new_s[new_l++]=*ptr;
                 ptr++;
             }
-            remove_string();
-            set_string(new_s, new_l);
+            RemoveString();
+            SetString(new_s, new_l);
             // delete new_s;
         }
         return *this;
     }
     
-    int string_identifier::operator>(const string_identifier& cmpr) {
-        /*char* ptr = get_string();
-        char* ptr_cmpr = cmpr.get_string();
+    int StringIdentifier::operator>(const StringIdentifier& cmpr) {
+        /*char* ptr = iGetGtring();
+        char* ptr_cmpr = cmpr.iGetGtring();
 
         while (*ptr == *ptr_cmpr) {
             ptr++;
@@ -407,12 +407,12 @@ int string_identifier::operator<(const string_identifier &cmpr) {
         }
 
         return static_cast<int>(*ptr - *ptr_cmpr);*/
-        return comparator(this->get_string(), cmpr.get_string());
+        return comparator(this->iGetGtring(), cmpr.iGetGtring());
     }
 
-    int string_identifier::operator<(const string_identifier& cmpr) {
-        /*char* ptr = get_string();
-        char* ptr_cmpr = cmpr.get_string();
+    int StringIdentifier::operator<(const StringIdentifier& cmpr) {
+        /*char* ptr = iGetGtring();
+        char* ptr_cmpr = cmpr.iGetGtring();
 
         while (*ptr == *ptr_cmpr) {
             ptr++;
@@ -420,11 +420,11 @@ int string_identifier::operator<(const string_identifier &cmpr) {
         }
 
         return static_cast<int>(*ptr-*ptr_cmpr);*/
-        return comparator(this->get_string(), cmpr.get_string());
+        return comparator(this->iGetGtring(), cmpr.iGetGtring());
     }
 
-    std::ostream& operator<<(std::ostream& to, const string_identifier& obj) {
-        print_string(obj.get_string(), obj.get_lenght(), to);
+    std::ostream& operator<<(std::ostream& to, const StringIdentifier& obj) {
+        print_string(obj.iGetGtring(), obj.iGetLenght(), to);
         return to;
     }
 };
@@ -432,9 +432,9 @@ int string_identifier::operator<(const string_identifier &cmpr) {
   return static_cast<int>(*ptr - *ptr_cmpr);
 }
 
-std::ostream &string_identifier::operator<<(std::ostream &os,
-                                            const string_identifier &) {
-  os << print_string(get_string(), get_lenght());
+std::ostream &StringIdentifier::operator<<(std::ostream &os,
+                                            const StringIdentifier &) {
+  os << print_string(iGetGtring(), iGetLenght());
   return os;
 }
 }; // namespace my_string
