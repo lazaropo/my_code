@@ -1,88 +1,78 @@
 #include <iostream>
 
+namespace my_string {
+constexpr char k_lower_a = 'a';
+constexpr char k_upper_a = 'A';
+constexpr char k_lower_z = 'z';
+constexpr char k_upper_z = 'Z';
 
+std::ostream& print_string(const char* mpstring, const int mlenght,
+                           std::ostream& = std::cout);
 
+class string_identifier;
 
-namespace my_string{
-    constexpr char kLowerA = 'a';
-    constexpr char kUpperA = 'A';
-    constexpr char kLowerZ = 'z';
-    constexpr char kUpperZ = 'Z';
+void print_string(const char* str, const int l, std::ostream& to = std::cout);
 
-    std::ostream& print_string(const char* mpstring, const int mlenght, std::ostream& = std::cout);
-    int comparator(const char* str1, const char* str2);
+class string {
+ private:
+  // My Pointer string
+  char* mp_string = nullptr;
+  int m_lenght = 0;
 
-    class StringIdentifier;
+ protected:
+  void remove_string();
 
-void print_string(const char *mpstring, const int mlenght);
+  // virtual char* i_find_substring(const char* ptr) = 0;
 
-class String {
-private:
-    // My Pointer String
-  char *mpstring = nullptr;
-  int mlenght = 0;
-
-protected:
-    void RemoveString();
-
-    virtual char* iFindSubstring(const char* ptr) =0;
-    
-    // virtual int comparator(const char* str1, const char* str2) const;
-    // virtual char* remove_substring(const char* ptr);
-public:
-    int iGetLenght() const;
-    char* iGetGtring() const;
-    virtual void iSetUppercase()=0;
-    virtual char* iFindSymbol(char c)=0;
-    virtual void iSetLowercase()=0;
-    virtual char* iFindSubstring(const char* ptr) = 0;
-
-protected:
-    void SetChar(char);
-    void SetString(char*, int);
-
-    friend std::ostream& operator<<(std::ostream& to, const String&);
-
-    String();
-    String(const char *ptr, int l);
-    String(char c);
-    String(const String & parent);
-    ~String();
-
-  // int iGetLenght() const;
-  // void RemoveString();
-
+  // virtual int comparator(const char* str1, const char* str2) const;
   // virtual char* remove_substring(const char* ptr);
-  // char *iGetGtring() const;
+ public:
+  int i_get_lenght() const;
+  char* i_get_string() const;
+  friend std::ostream& operator<<(std::ostream& to, const string&);
+  virtual void i_set_uppercase() = 0;
+  virtual char* i_find_symbol(char c) = 0;
+  virtual void i_set_lowercase() = 0;
+  virtual char* i_find_substring(const char* ptr) = 0;
 
+ protected:
+  void e_set_char(char);
+  void e_set_string(char*, int);
+
+  string();
+  string(const char* ptr, int l);
+  string(char c);
+  string(const string& parent);
+  ~string();
 };
 
-class StringIdentifier : public String {
-  int CheckChar(char c);
+class string_identifier : public string {
+  int m_check_char(char c);
+  int m_comparator(const string_identifier& obj1,
+                   const string_identifier& obj2);
 
-public:
-  StringIdentifier();
-  StringIdentifier(char *ptr);
-  StringIdentifier(char c);
-  StringIdentifier(const StringIdentifier &);
-  ~StringIdentifier() = default;
+ public:
+  string_identifier();
+  string_identifier(char* ptr);
+  string_identifier(char c);
+  string_identifier(const string_identifier&);
+  ~string_identifier() = default;
 
-  void iSetUppercase();
-  void iSetLowercase();
-  char *iFindSymbol(char c);
-  int iGetLenght() const;
+  void i_set_uppercase();
+  void i_set_lowercase();
+  char* i_find_symbol(char c);
+  int i_get_lenght() const;
 
+  string_identifier& operator=(const string_identifier&);
+  string_identifier& operator=(char*);
+  string_identifier& operator+(string_identifier&);
+  string_identifier& operator-(string_identifier&&);
+  int operator>(const string_identifier&);
+  int operator<(const string_identifier&);
 
-    StringIdentifier& operator=(const StringIdentifier&);
-    StringIdentifier& operator=(char*);
-    StringIdentifier& operator+(StringIdentifier&);
-    StringIdentifier& operator-(StringIdentifier&&);
-    int operator>(const StringIdentifier&);
-    int operator<(const StringIdentifier&);
+  friend std::ostream& operator<<(std::ostream&, const string_identifier&);
 
-    friend std::ostream& operator<<(std::ostream&, const StringIdentifier&);
-
-    char *iFindSubstring(const char *ptr) const override;
+  char* i_find_substring(const char* ptr) const override;
   // char* remove_substring(const char* ptr) override;
 };
-} // namespace my_string
+}  // namespace my_string
