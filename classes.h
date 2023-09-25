@@ -11,7 +11,7 @@ std::ostream& print_string(const char* mpstring, const int mlenght,
 
 class string_identifier;
 
-void print_string(const char* str, const int l, std::ostream& to = std::cout);
+// void print_string(const char* str, const int l, std::ostream& to = std::cout);
 
 class string {
  private:
@@ -28,16 +28,19 @@ class string {
   // virtual char* remove_substring(const char* ptr);
  public:
   int i_get_lenght() const;
-  char* i_get_string() const;
+  char* i_get_string();
+  void i_set_char(char);
+  void i_set_string(char*, int);
   friend std::ostream& operator<<(std::ostream& to, const string&);
   virtual void i_set_uppercase() = 0;
   virtual char* i_find_symbol(char c) = 0;
   virtual void i_set_lowercase() = 0;
-  virtual char* i_find_substring(const char* ptr) = 0;
+  virtual const char* i_find_substring(const char* ptr) const = 0;
 
  protected:
-  void e_set_char(char);
-  void e_set_string(char*, int);
+  
+  void e_remove_string();
+  const char* e_get_string();
 
   string();
   string(const char* ptr, int l);
@@ -47,7 +50,7 @@ class string {
 };
 
 class string_identifier : public string {
-  int m_check_char(char c);
+  int m_check_char(const char c);
   int m_comparator(const string_identifier& obj1,
                    const string_identifier& obj2);
 
@@ -61,7 +64,7 @@ class string_identifier : public string {
   void i_set_uppercase();
   void i_set_lowercase();
   char* i_find_symbol(char c);
-  int i_get_lenght() const;
+  // int i_get_lenght() const;
 
   string_identifier& operator=(const string_identifier&);
   string_identifier& operator=(char*);
@@ -72,7 +75,7 @@ class string_identifier : public string {
 
   friend std::ostream& operator<<(std::ostream&, const string_identifier&);
 
-  char* i_find_substring(const char* ptr) const override;
+  const char* i_find_substring(const char* ptr) const override;
   // char* remove_substring(const char* ptr) override;
 };
 }  // namespace my_string
