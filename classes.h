@@ -29,8 +29,8 @@ class string {
  public:
   int i_get_lenght() const;
   char* i_get_string();
-  void i_set_char(char);
-  void i_set_string(char*, int);
+  void i_set_char(const char);
+  void i_set_string(const char*, const int);
   friend std::ostream& operator<<(std::ostream& to, const string&);
   virtual void i_set_uppercase() = 0;
   virtual char* i_find_symbol(char c) = 0;
@@ -40,7 +40,7 @@ class string {
  protected:
   
   void e_remove_string();
-  const char* e_get_string();
+  const char* e_get_string() const;
 
   string();
   string(const char* ptr, int l);
@@ -68,7 +68,7 @@ class string_identifier : public string {
 
   string_identifier& operator=(const string_identifier&);
   string_identifier& operator=(char*);
-  string_identifier& operator+(string_identifier&);
+  string_identifier& operator+(const string_identifier&);
   string_identifier& operator-(string_identifier&&);
   int operator>(const string_identifier&);
   int operator<(const string_identifier&);

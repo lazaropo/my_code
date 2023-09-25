@@ -34,9 +34,9 @@ namespace my_string {
 
     char* string::i_get_string() { return mp_string; }
 
-    const char* string::e_get_string() { return mp_string; }
+    const char* string::e_get_string() const { return mp_string; }
 
-    void string::i_set_char(char c) {
+    void string::i_set_char(const char c) {
         char* tmp = new char[++m_lenght];
         for (int i = 0; i < m_lenght; ++i) tmp[i] = mp_string[i];
         tmp[m_lenght] = c;
@@ -45,7 +45,7 @@ namespace my_string {
         return;
     }
 
-    void string::i_set_string(char* new_string, int new_l) {
+    void string::i_set_string(const char* new_string, const int new_l) {
         delete mp_string;
         mp_string = new char[new_l];
         m_lenght = new_l;
@@ -63,8 +63,9 @@ namespace my_string {
             : 1;
     }
 
-    int m_comparator(const string_identifier& obj1, const string_identifier& obj2) {
-        const char* ptr1 = obj1.e_get_string(), * ptr2 = obj2.e_get_string();
+    int string_identifier::m_comparator(const string_identifier& obj1, const string_identifier& obj2) {
+        const char* ptr1 = obj1.e_get_string(), 
+            * ptr2 = obj2.e_get_string();
         int ret_value = 0, l1 = obj1.i_get_lenght(), l2 = obj2.i_get_lenght();
         int i = 0, max_i = l1 > l2 ? l2 : l1;
         for (; ptr1[i] == ptr2[i] && i < max_i; ++i) {
@@ -101,8 +102,8 @@ namespace my_string {
     string_identifier::string_identifier() : string() {}
 
     string_identifier::string_identifier(char* ptr) {
-        char* p_tmp = i_get_string();
-        if (i_get_string()) {
+        const char* p_tmp = this->e_get_string();
+        if (p_tmp) {
             string_identifier();
         }
         int i = 0;
@@ -156,13 +157,13 @@ namespace my_string {
         return ptr;
     }
     string_identifier& string_identifier::operator=(const string_identifier& init) {
-        this->i_set_string(init.i_get_string(), init.i_get_lenght());
+        this->i_set_string(init.e_get_string(), init.i_get_lenght());
         // string_identifier(init);
         return *this;
     };
 
-    string_identifier& string_identifier::operator+(string_identifier& temp) {
-        this->i_set_string(temp.i_get_string(), temp.i_get_lenght());
+    string_identifier& string_identifier::operator+(const string_identifier& temp) {
+        this->i_set_string(temp.e_get_string(), temp.i_get_lenght());
         return *this;
     };
 
@@ -191,7 +192,7 @@ namespace my_string {
     }
 
     int string_identifier::operator>(const string_identifier& cmpr) {
-        const char* ptr = this->e_get_string();
+        const char* ptr = e_get_string();
         const char* ptr_cmpr = cmpr.e_get_string();
 
         while (*ptr == *ptr_cmpr) {
@@ -203,7 +204,7 @@ namespace my_string {
     }
 
     int string_identifier::operator<(const string_identifier& cmpr) {
-        const char* ptr = this->e_get_string();
+        const char* ptr = e_get_string();
         const char* ptr_cmpr = cmpr.e_get_string();
 
         while (*ptr == *ptr_cmpr) {
@@ -214,7 +215,7 @@ namespace my_string {
     }
 
         std::ostream& operator<<(std::ostream & to, const string & obj) {
-            print_string(obj.i_get_string(), obj.i_get_lenght(), to);
+            print_string(obj.e_get_string(), obj.i_get_lenght(), to);
             return to;
         }
 }
