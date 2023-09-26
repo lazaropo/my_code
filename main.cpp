@@ -66,17 +66,19 @@ int checking_string() {
         ? print_string(obj.i_find_symbol(ch), obj.i_get_lenght())
         : print_string("NULLPTR", 8) << endl;*/
 
-    string_identifier* ptr;
+    my_string::string* ptr;
+    my_string::string*& lp = ptr;
     {
         string_identifier tmp {};
         ptr = &tmp;
         cout << "Empty constructor test: "
-            << (tmp.i_get_string() && tmp.i_get_lenght() ? "SUCCESS"
+            << (lp && !tmp.i_get_lenght() ? "SUCCESS"
                 : (e_code++, "FAIL"))
             << endl;
     }
 
-    cout << "Destroyer test: " << (ptr ? (e_code++, "FAIL") : "SUCCESS") << endl;
+    cout << "Destroyer test: " << (lp ? (e_code++, "FAIL") : "SUCCESS") << endl;
+    cout << lp << endl;
 
     //{
     //  char exmp[] = "this is\n STRING";

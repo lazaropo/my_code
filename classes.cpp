@@ -21,6 +21,7 @@ namespace my_string {
 
     string::~string() {
         delete[] mp_string;
+        mp_string = nullptr;
         m_lenght = 0;
     }
 
