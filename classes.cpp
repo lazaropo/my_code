@@ -1,5 +1,5 @@
 #include "classes.h"
-
+#include "cassert"
 namespace my_string {
 
     std::ostream& print_string(const char* str, const int l, std::ostream& to) {
@@ -14,7 +14,7 @@ namespace my_string {
         for (int i = 0; i < l; ++i) mp_string[i] = ptr[i];
     }
 
-    string::string(char c) : mp_string(new char[1]), m_lenght(1) { mp_string[0] = c; }
+    string::string(const char c) : mp_string(new char[1]), m_lenght(1) { mp_string[0] = c; }
 
     string::string(const string& parent)
         : string(parent.e_get_string(), parent.i_get_lenght()) {}
@@ -37,7 +37,7 @@ namespace my_string {
 
     const char* string::e_get_string() const { return mp_string; }
 
-    void string::i_set_char(const char c) {
+    void string::e_set_char(const char c) {
         char* tmp = new char[++m_lenght];
         for (int i = 0; i < m_lenght; ++i) tmp[i] = mp_string[i];
         tmp[m_lenght] = c;
@@ -54,11 +54,26 @@ namespace my_string {
         return;
     }
 
+    int string::i_compare_with_string(const char* str, const int l) {
+        assert(str && l);
+        int i = 0;
+        // std::cout << std::endl << mp_string[i] << std::endl << str[i];
+        for (; str[i] == mp_string[i] && i < m_lenght && i < l; ++i) { 
+            std::cout << std::endl << mp_string[i] << std::endl << str[i]; }
+        // std::cout << endl << i << endl;
+        if (mp_string[i]>str[i] )
+            return 1;
+        else if (mp_string[i]==str[i])
+            return 0;
+        else
+            return -1;
+    }
+
     //
     // Definisions of funcs from STRING_IDENTIFIER class
     //
     int string_identifier::m_check_char(const char c) {
-        return ((c > k_lower_a && c < k_lower_z) || (c > k_upper_a && c < k_upper_z) ||
+        return ((c >= k_lower_a && c <= k_lower_z) || (c >= k_upper_a && c <= k_upper_z) ||
             c == '_')
             ? 0
             : 1;
@@ -102,7 +117,7 @@ namespace my_string {
 
     string_identifier::string_identifier() : string() {}
 
-    string_identifier::string_identifier(char* ptr) {
+    string_identifier::string_identifier(const char* ptr) {
         const char* p_tmp = this->e_get_string();
         if (p_tmp) {
             string_identifier();
@@ -116,17 +131,14 @@ namespace my_string {
                 break;
             }
             else {
-                i_set_char(ptr[i]);
+                e_set_char(ptr[i]);
             }
         } while (p_tmp[i++]);
         // string.mlenght=i?--i:i;
     }
 
-    string_identifier::string_identifier(const char c) {
-        if (m_check_char(c))
-            e_remove_string();
-        else
-            i_set_char(c);
+    string_identifier::string_identifier(const char c) : string(c){
+        // if (!m_check_char(c))
     }
 
     string_identifier::string_identifier(const string_identifier& parent)

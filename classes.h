@@ -19,34 +19,30 @@ class string {
   char* mp_string = nullptr;
   int m_lenght = 0;
 
- protected:
-  void remove_string();
+ protected:  
+  void e_remove_string();
+  const char* e_get_string() const;
+  void e_set_char(const char);
 
-  // virtual char* i_find_substring(const char* ptr) = 0;
-
-  // virtual int comparator(const char* str1, const char* str2) const;
-  // virtual char* remove_substring(const char* ptr);
  public:
+  string();
+  string(const char c);
+  string(const char* ptr, const int l);
+  string(const string& parent);
+  ~string();
+
   int i_get_lenght() const;
   char* i_get_string();
-  void i_set_char(const char);
+  
   void i_set_string(const char*, const int);
+  int i_compare_with_string(const char* str, const int l);
+
   friend std::ostream& operator<<(std::ostream& to, const string&);
+
   virtual void i_set_uppercase() = 0;
   virtual char* i_find_symbol(char c) = 0;
   virtual void i_set_lowercase() = 0;
   virtual const char* i_find_substring(const char* ptr) const = 0;
-
- protected:
-  
-  void e_remove_string();
-  const char* e_get_string() const;
-
-  string();
-  string(const char* ptr, int l);
-  string(char c);
-  string(const string& parent);
-  ~string();
 };
 
 class string_identifier : public string {
@@ -56,14 +52,14 @@ class string_identifier : public string {
 
  public:
   string_identifier();
-  string_identifier(char* ptr);
-  string_identifier(char c);
+  string_identifier(const char* ptr);
+  string_identifier(const char c);
   string_identifier(const string_identifier&);
   ~string_identifier() = default;
 
   void i_set_uppercase();
   void i_set_lowercase();
-  char* i_find_symbol(char c);
+  char* i_find_symbol(const char c);
   // int i_get_lenght() const;
 
   string_identifier& operator=(const string_identifier&);
