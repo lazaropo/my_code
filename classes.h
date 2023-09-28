@@ -11,7 +11,8 @@ std::ostream& print_string(const char* mpstring, const int mlenght,
 
 class string_identifier;
 
-// void print_string(const char* str, const int l, std::ostream& to = std::cout);
+// void print_string(const char* str, const int l, std::ostream& to =
+// std::cout);
 
 class string {
  private:
@@ -19,7 +20,7 @@ class string {
   char* mp_string = nullptr;
   int m_lenght = 0;
 
- protected:  
+ protected:
   void e_remove_string();
   const char* e_get_string() const;
   void e_set_char(const char c);
@@ -35,7 +36,7 @@ class string {
 
   int i_get_lenght() const;
   char* i_get_string();
-  
+
   int i_compare_with_string(const char* str, const int l) const;
 
   friend std::ostream& operator<<(std::ostream& to, const string&);
