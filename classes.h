@@ -41,7 +41,6 @@ class string {
   friend std::ostream& operator<<(std::ostream& to, const string&);
 
   virtual void i_set_uppercase() = 0;
-  virtual char* i_find_symbol(const char c) = 0;
   virtual void i_set_lowercase() = 0;
   virtual const char* i_find_substring(const char* ptr, const int l) const = 0;
 };

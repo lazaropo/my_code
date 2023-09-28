@@ -47,7 +47,7 @@ namespace my_string {
     }
 
     void string::e_set_string(const char* new_string, const int new_l) {
-        delete mp_string;
+        delete[] mp_string;
         mp_string = new char[new_l];
         m_lenght = new_l;
         for (int i = 0; i < new_l; ++i) mp_string[i] = new_string[i];
@@ -160,13 +160,6 @@ namespace my_string {
         return;
     }
 
-    char* string_identifier::i_find_symbol(const char c) {
-        char* ptr = i_get_string();
-        while (*ptr != c) {
-            ptr++;
-        }
-        return ptr;
-    }
     string_identifier& string_identifier::operator=(const string_identifier& init) {
         this->e_set_string(init.e_get_string(), init.i_get_lenght());
         // string_identifier(init);
@@ -203,8 +196,8 @@ namespace my_string {
     }
 
     int string_identifier::operator>(const string_identifier& cmpr) {
-        const char* ptr = e_get_string();
-        const char* ptr_cmpr = cmpr.e_get_string();
+        const char* ptr = e_get_string(),
+            *ptr_cmpr = cmpr.e_get_string();
 
         while (*ptr == *ptr_cmpr) {
             ptr++;
@@ -215,8 +208,8 @@ namespace my_string {
     }
 
     int string_identifier::operator<(const string_identifier& cmpr) {
-        const char* ptr = e_get_string();
-        const char* ptr_cmpr = cmpr.e_get_string();
+        const char* ptr = e_get_string(),
+            *ptr_cmpr = cmpr.e_get_string();
 
         while (*ptr == *ptr_cmpr) {
             ptr++;
