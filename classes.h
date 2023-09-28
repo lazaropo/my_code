@@ -22,7 +22,9 @@ class string {
  protected:  
   void e_remove_string();
   const char* e_get_string() const;
-  void e_set_char(const char);
+  void e_set_char(const char c);
+  void e_set_string(const char* new_string, const int l);
+  void e_add_string(const char* str, const int l);
 
  public:
   string();
@@ -34,15 +36,14 @@ class string {
   int i_get_lenght() const;
   char* i_get_string();
   
-  void i_set_string(const char*, const int);
-  int i_compare_with_string(const char* str, const int l);
+  int i_compare_with_string(const char* str, const int l) const;
 
   friend std::ostream& operator<<(std::ostream& to, const string&);
 
   virtual void i_set_uppercase() = 0;
-  virtual char* i_find_symbol(char c) = 0;
+  virtual char* i_find_symbol(const char c) = 0;
   virtual void i_set_lowercase() = 0;
-  virtual const char* i_find_substring(const char* ptr) const = 0;
+  virtual const char* i_find_substring(const char* ptr, const int l) const = 0;
 };
 
 class string_identifier : public string {
@@ -52,7 +53,7 @@ class string_identifier : public string {
 
  public:
   string_identifier();
-  string_identifier(const char* ptr);
+  string_identifier(const char* ptr, const int l);
   string_identifier(const char c);
   string_identifier(const string_identifier&);
   ~string_identifier() = default;
@@ -63,7 +64,7 @@ class string_identifier : public string {
   // int i_get_lenght() const;
 
   string_identifier& operator=(const string_identifier&);
-  string_identifier& operator=(char*);
+  // string_identifier& operator=(const char*);
   string_identifier& operator+(const string_identifier&);
   string_identifier& operator-(string_identifier&&);
   int operator>(const string_identifier&);
@@ -71,7 +72,7 @@ class string_identifier : public string {
 
   friend std::ostream& operator<<(std::ostream&, const string_identifier&);
 
-  const char* i_find_substring(const char* ptr) const override;
+  const char* i_find_substring(const char* ptr, const int l) const override;
   // char* remove_substring(const char* ptr) override;
 };
 }  // namespace my_string

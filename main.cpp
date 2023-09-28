@@ -55,19 +55,7 @@ int checking_string() {
     using namespace std;
     using namespace my_string;
     int e_code = 0;
-    // string_identifier obj{};
-    // cout << usr << endl;
-    // cout << obj << endl;
-    /*obj.i_set_uppercase();
-    cout << "Uppercase test: " << obj << endl;
-    obj.i_set_lowercase();
-    cout << "Lowercase test: " << obj << endl;
-    cout << "First char \'" << ch << " \' in string:" << obj.i_find_symbol(ch)
-        ? print_string(obj.i_find_symbol(ch), obj.i_get_lenght())
-        : print_string("NULLPTR", 8) << endl;*/
 
-    // my_string::string* ptr;
-    // my_string::string*& lp = ptr;
     {
        string_identifier tmp {};
 
@@ -77,115 +65,131 @@ int checking_string() {
                 : (e_code++, "FAIL"))
             << endl;
     }
-
-    {
-        const char* for_test = "a";
+    if(!e_code){
+        const char* test_result = "a";
         string_identifier tmp {'a'};
 
-        bool test1 = !(tmp.i_compare_with_string(for_test, 1));
+        bool test1 = !(tmp.i_compare_with_string(test_result, 1));
         bool test2 = tmp.i_get_lenght() == 1;
-        cout << "Char constructor test - 'a': "
-            << test1 << endl << test2 << endl
+        cout << "Char constructor test : "
             << (test1 && test2 
                 ? "SUCCESS"
                 : (e_code++, "FAIL"))
             << endl;
     }
+    if(!e_code){
+        const char* test_result = "bebra";
+        string_identifier tmp{ test_result , 5};
 
+        cout << "String constructor test: "
+            << (tmp.i_compare_with_string(test_result, 5)
+                ? (e_code++, "FAIL")
+                : "SUCCESS")
+           << endl;
+    }
 
-    //{
-    //  char exmp[] = "this is\n STRING";
-    //  string_identifier tmp(exmp);
-    //  string_identifier& lr = tmp;
-    //  cout << "String for init: "
-    //       << "this is\n STRING";
-    //  // Make string_compare func!!!
-    //  cout << "String constructor test: "
-    //       << (comparator(lr.i_get_string(), {"this is\n STRING"})
-    //               ? (e_code++, "FAIL")
-    //               : "SUCCESS")
-    //       << endl;
-    //  // cout << "string constructor test: "  <<
-    //  //	obj.i_find_symbol(ch) ? print_string(obj.i_find_symbol(ch),
-    //  // obj.i_get_lenght()) :
-    //}
+    if(!e_code){
+        const char* for_test = "bebra";
+        string_identifier from{ for_test, 5 };
+        string_identifier to{ from };
 
-    //{
-    //  string_identifier tmp('t');
-    //  string_identifier& lr = tmp;
-    //  cout << "Char for init: " << 't';
-    //  // Make string_compare func!!!
-    //  cout << "Char constructor test: "
-    //       << (comparator(lr.i_get_string(), {"t"}) ? "FAIL" : "SUCCESS") << endl;
-    //}
+        cout << "Copy constructor test: "
+           << (to.i_compare_with_string(from.i_get_string(), from.i_get_lenght())
+                ? (e_code++, "FAIL")
+                : "SUCCESS")
+           << endl;
+    }
 
-    //{
-    //  char exmp[] = "bebra_____BEBRA";
-    //  string_identifier tmp2(exmp);
-    //  string_identifier& lr2 = tmp2;
-    //  string_identifier& lr1{lr2};
-    //  cout << "String for init: "
-    //       << "bebra_____BEBRA" << endl;
-    //  cout << "Overload for \'=\' operation result: " << lr1 << endl;
-    //  cout << "Overload for \'=\' operation test result: "
-    //       << (comparator(lr1.i_get_string(), {"bebra_____BEBRA"})
-    //               ? (e_code++, "FAIL")
-    //               : "SUCCESS")
-    //       << endl;
-    //  lr1.i_set_uppercase();
-    //  cout << "Uppercase func result: " << lr1 << endl;
-    //  cout << "Uppercase func test: "
-    //       << (comparator(lr1.i_get_string(), {"bebra_____bebra"})
-    //               ? (e_code++, "FAIL")
-    //               : "SUCCESS")
-    //       << endl;
-    //  lr2.i_set_lowercase();
-    //  cout << "Lowercase func result: " << lr2 << endl;
-    //  cout << "Lowercase func test: "
-    //       << (comparator(lr2.i_get_string(), {"bebra_____bebra"})
-    //               ? (e_code++, "FAIL")
-    //               : "SUCCESS")
-    //       << endl;
-    //}
+    if(!e_code){
+        const char* for_test = "bEbRa",
+            *test_result_1 = "BEBRA",
+            *test_result_2 = "bebra";
+        string_identifier test1{ for_test, 5 },
+            test2{ for_test, 5 };
 
-    //{
-    //  char str1[] = "bebra1___";
-    //  char str2[] = "bebra2___";
-    //  string_identifier tmp1(str1);
-    //  string_identifier tmp2(str2);
-    //  string_identifier& lr1 = tmp1;
-    //  string_identifier& lr2 = tmp2;
-    //  string_identifier& lr3 = lr1 + lr2;
-    //  cout << "Overload for \'+\' operation result: " << lr3 << endl;
-    //  cout << "Overload for \'+\' operation test result: "
-    //       << (comparator(lr3.i_get_string(), {"bebra1___bebra2___"})
-    //               ? (e_code++, "FAIL")
-    //               : "SUCCESS")
-    //       << endl;
-    //  char str3[] = "bebra";
-    //  lr3 = lr3 - string_identifier{str3};
-    //  cout << "Overload for \'-\' operation result: " << lr3 << endl;
-    //  cout << "Overload for \'-\' operation test result: "
-    //       << (comparator(lr3.i_get_string(), {"1___2___"}) ? (e_code++, "FAIL")
-    //                                                        : "SUCCESS")
-    //       << endl;
-    //  char num1[] = "22";
-    //  char num2[] = "11";
-    //  char num3[] = "00";
-    //  //	char num4[]=
-    //  cout << "Overload for \'>\' operation test result: "
-    //       << ((lr3 > string_identifier{num1}) == '2' - '1' &&
-    //                   !(lr3 > string_identifier{num2})
-    //               ? "SUCCESS"
-    //               : (e_code++, "FAIL"))
-    //       << endl;
-    //  cout << "Overload for \'<\' operation test result: "
-    //       << ((lr3 < string_identifier{num3}) == '2' - '1' &&
-    //                   !(lr3 < string_identifier{num2})
-    //               ? "SUCCESS"
-    //               : (e_code++, "FAIL"))
-    //       << endl;
-    //}
+        test1.i_set_uppercase();
+        cout << "Uppercase func test : "
+           << (test1.i_compare_with_string(test_result_1, 5)
+                   ? (e_code++, "FAIL")
+                   : "SUCCESS")
+           << endl;
 
+        test2.i_set_lowercase();
+        cout << "Lowercase func test: "
+           << (test2.i_compare_with_string(test_result_2, 5)
+                   ? (e_code++, "FAIL")
+                   : "SUCCESS")
+           << endl;
+    }
+
+    if(!e_code){
+        const char* for_test = "bebra";
+        string_identifier from{ for_test, 5 },
+            to = from;
+
+        cout << "Overload for \'=\' operation test result: "
+           << (to.i_compare_with_string(from.i_get_string(), from.i_get_lenght())
+                ? (e_code++, "FAIL")
+                : "SUCCESS")
+           << endl;
+    }
+
+    if(!e_code){
+        const char* for_test1 = "sobakaA", 
+            * for_test2 = "sobakaB",
+            *test_result = "sobakaAsobakaB";
+        string_identifier test1{ for_test1, 7 }, 
+            test2{ for_test2, 7 };
+
+        test1 + test2;
+        cout << "Overload for \'+\' operation test result: "
+            << (test1.i_compare_with_string(test_result, 14)
+                   ? (e_code++, "FAIL")
+                   : "SUCCESS")
+           << endl;
+    }
+
+    if(!e_code){
+        const char* for_test1 = "sobakaAsobakaB",
+            *for_test2 = "sobaka",
+            *test_result = "AsobakaB";
+        string_identifier test1{ for_test1 , 14},
+            test2{ for_test2, 6};
+        // :))))))))))))))))))))))))))))))
+        test1 - static_cast<string_identifier&&>(test2);
+        cout << "Overload for \'-\' operation test result: "
+            << (test1.i_compare_with_string(test_result, 8)
+                   ? (e_code++, "FAIL")
+                   : "SUCCESS")
+           << endl;
+    }
+
+    if(!e_code){
+        const char* for_test1 = "bebra",
+            * for_test2 = "beppa";
+        const int test_result = 'b' - 'p';
+        string_identifier test1{ for_test1, 5 },
+            test2{ for_test2, 5 };
+
+        cout << "Overload for \'>\' operation test result: "
+          << (((test1 > test2) == test_result)
+                  ? "SUCCESS"
+                   : (e_code++, "FAIL"))
+           << endl;   
+    }
+
+    if(!e_code){
+        const char* for_test1 = "bebra, 5",
+            * for_test2 = "beppa, 5";
+        const int test_result = 'b' - 'p';
+        string_identifier test1{ for_test1, 5 },
+            test2{ for_test2, 5 };
+
+        cout << "Overload for \'<\' operation test result: "
+          << (((test1 < test2) == test_result)
+                  ? "SUCCESS"
+                   : (e_code++, "FAIL"));   
+    }
+    
     return e_code;
 }

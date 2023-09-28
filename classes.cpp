@@ -46,7 +46,7 @@ namespace my_string {
         return;
     }
 
-    void string::i_set_string(const char* new_string, const int new_l) {
+    void string::e_set_string(const char* new_string, const int new_l) {
         delete mp_string;
         mp_string = new char[new_l];
         m_lenght = new_l;
@@ -54,14 +54,25 @@ namespace my_string {
         return;
     }
 
-    int string::i_compare_with_string(const char* str, const int l) {
+    void string::e_add_string(const char* p, const int l) {
+        char* mp_string_new = new char[m_lenght + l];
+        for (int i = 0; i < m_lenght; ++i)
+            mp_string_new[i] = mp_string[i];
+        for (int i = 0; i < l; ++i)
+            mp_string_new[m_lenght + i] = p[i];
+        delete[] mp_string;
+        mp_string = mp_string_new;
+        m_lenght = m_lenght + l;
+        return;        
+    }
+
+    int string::i_compare_with_string(const char* str, const int l) const {
         assert(str && l);
         int i = 0;
         // std::cout << std::endl << mp_string[i] << std::endl << str[i];
-        for (; str[i] == mp_string[i] && i < m_lenght && i < l; ++i) { 
-            std::cout << std::endl << mp_string[i] << std::endl << str[i]; }
-        // std::cout << endl << i << endl;
-        if (mp_string[i]>str[i] )
+        for (; str[i] == mp_string[i] && i < m_lenght && i < l; ++i) { ; }
+        --i;
+        if (mp_string[i] > str[i])
             return 1;
         else if (mp_string[i]==str[i])
             return 0;
@@ -101,40 +112,27 @@ namespace my_string {
 
     // char delta = ('a' - 'A') > 0 ? 'a' - 'A' : - ('a' - 'A');
 
-    const char* string_identifier::i_find_substring(const char* ptr) const {
+    const char* string_identifier::i_find_substring(const char* ptr, const int l) const {
         int i = 0;
-        const char* ptr_str = e_get_string();
-        for (int j = 0; ptr_str[i]; ++i) {
-            for (j = 0; ptr[j] && ptr_str[i + j] && ptr[j] == ptr_str[i + j]; ++j) {
+        const int this_lenght = i_get_lenght();
+        const char* this_str = e_get_string();
+        for (int j = 0; i < this_lenght; ++i) {
+            for (j = 0; i < this_lenght && j < l && ptr[j] == this_str[i + j]; ++j) {
                 ;
             }
-            if (!ptr[j]) {
+            if (j==l) {
                 break;
             }
         }
-        return ptr_str[i] ? &ptr_str[i] : nullptr;
+        return i==this_lenght ? nullptr : &this_str[i] ;
     }
 
     string_identifier::string_identifier() : string() {}
 
-    string_identifier::string_identifier(const char* ptr) {
-        const char* p_tmp = this->e_get_string();
-        if (p_tmp) {
-            string_identifier();
-        }
-        int i = 0;
-
-        do {
-            if (m_check_char(ptr[i])) {
-                e_remove_string();
-                i = 0;
-                break;
-            }
-            else {
-                e_set_char(ptr[i]);
-            }
-        } while (p_tmp[i++]);
-        // string.mlenght=i?--i:i;
+    string_identifier::string_identifier(const char* ptr, const int l) 
+    : string(ptr, l){
+        // How to check every char???
+        // if (!m_check_char(c))
     }
 
     string_identifier::string_identifier(const char c) : string(c){
@@ -158,7 +156,7 @@ namespace my_string {
             : -(k_lower_a - k_upper_a);
         char* p = i_get_string();
         for (int i = 0, l = i_get_lenght(); i < l; ++i)
-            p[i] = p[i] > k_upper_z ? p[i] - k_delta : p[i];
+            p[i] = p[i] < k_upper_a ? p[i] + k_delta : p[i];
         return;
     }
 
@@ -170,35 +168,35 @@ namespace my_string {
         return ptr;
     }
     string_identifier& string_identifier::operator=(const string_identifier& init) {
-        this->i_set_string(init.e_get_string(), init.i_get_lenght());
+        this->e_set_string(init.e_get_string(), init.i_get_lenght());
         // string_identifier(init);
         return *this;
     };
 
     string_identifier& string_identifier::operator+(const string_identifier& temp) {
-        this->i_set_string(temp.e_get_string(), temp.i_get_lenght());
+        this->e_add_string(temp.e_get_string(), temp.i_get_lenght());
         return *this;
     };
 
     string_identifier& string_identifier::operator-(string_identifier&& tmp) {
-        const char* here = i_find_substring(tmp.i_get_string());
+        const char* here = i_find_substring(tmp.e_get_string(), tmp.i_get_lenght());
+        // std::cout << "After find_subs" << std::endl;
         if (here) {
-            char* ptr = i_get_string(),
+            char* this_str = i_get_string(),
                 * new_s = new char[i_get_lenght() - tmp.i_get_lenght()];
             int new_l = 0;
-            while (ptr != here) {
-                new_s[new_l++] = *ptr;
-                ptr++;
+            while (*this_str != *here) {
+                new_s[new_l++] = *this_str;
+                this_str++;
             }
-            while (*here) {
-                ptr++;
-            }
-            while (*ptr) {
-                new_s[new_l++] = *ptr;
-                ptr++;
+            for(int i=0; i<tmp.i_get_lenght(); ++i)
+                this_str++;
+            while (*this_str) {
+                new_s[new_l++] = *this_str;
+                this_str++;
             }
             e_remove_string();
-            i_set_string(new_s, new_l);
+            e_set_string(new_s, new_l);
             // delete new_s;
         }
         return *this;
@@ -228,6 +226,11 @@ namespace my_string {
     }
 
         std::ostream& operator<<(std::ostream & to, const string & obj) {
+            print_string(obj.e_get_string(), obj.i_get_lenght(), to);
+            return to;
+        }
+
+        std::ostream& operator<<(std::ostream & to, const string_identifier & obj) {
             print_string(obj.e_get_string(), obj.i_get_lenght(), to);
             return to;
         }
