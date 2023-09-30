@@ -112,9 +112,7 @@ int string_identifier::m_comparator(const string_identifier& obj1,
   return ret_value;
 }
 
-
-string_identifier::string_identifier() 
-    : string() {}
+string_identifier::string_identifier() : string() {}
 
 string_identifier::string_identifier(const char* ptr, const int l)
     : string(ptr, l) {
@@ -122,8 +120,7 @@ string_identifier::string_identifier(const char* ptr, const int l)
   // if (!m_check_char(c))
 }
 
-string_identifier::string_identifier(const char c) 
-    : string(c) {
+string_identifier::string_identifier(const char c) : string(c) {
   // if (!m_check_char(c))
 }
 
@@ -131,9 +128,8 @@ string_identifier::string_identifier(const string_identifier& parent)
     : string(static_cast<const string&>(parent)) {}
 
 void string_identifier::i_set_uppercase() {
-  const char k_delta = k_lower_a - k_upper_a > 0 
-      ? k_lower_a - k_upper_a
-      : -(k_lower_a - k_upper_a);
+  const char k_delta = k_lower_a - k_upper_a > 0 ? k_lower_a - k_upper_a
+                                                 : -(k_lower_a - k_upper_a);
   char* p = i_get_string();
   for (int i = 0, l = i_get_lenght(); i < l; ++i)
     p[i] = p[i] > k_upper_z ? p[i] - k_delta : p[i];
@@ -141,9 +137,8 @@ void string_identifier::i_set_uppercase() {
 }
 
 void string_identifier::i_set_lowercase() {
-  const char k_delta = k_lower_a - k_upper_a > 0 
-      ? k_lower_a - k_upper_a
-      : -(k_lower_a - k_upper_a);
+  const char k_delta = k_lower_a - k_upper_a > 0 ? k_lower_a - k_upper_a
+                                                 : -(k_lower_a - k_upper_a);
   char* p = i_get_string();
   for (int i = 0, l = i_get_lenght(); i < l; ++i)
     p[i] = p[i] < k_upper_a ? p[i] + k_delta : p[i];
@@ -227,4 +222,4 @@ std::ostream& operator<<(std::ostream& to, const string_identifier& obj) {
   print_string(obj.e_get_string(), obj.i_get_lenght(), to);
   return to;
 }
-}
+}  // namespace my_string

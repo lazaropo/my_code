@@ -20,34 +20,63 @@
 #include "classes.h"
 
 int checking_string();
+void expand_char_array_size(char* p, int l, int& l_max_old, double coeff = 1.7);
+void expand_string_array_size(my_string::string** pp, int l, int& l_max_old,
+                              double coeff = 1.7);
 
 int main() {
-  /*
   using namespace my_string;
-  string* pps = string_identifier{"test"};
-  int num_of_strings = 0;
-  */
+  // START - PART WITH USERS INPUT
+  int l_pps = 1, l_max_pps = 1, e_code = 1;
+  string** pps = new string[l_max_pps];
+  while (e_code) {
+    int l_input = 0, l_max_input = 32;
+    char p_input[l_max_input];
+    do {
+      char c;
+      e_code = (std::cin >> c);
+      if (l_input >= l_max_input)
+        expand_char_array_size(p_input, l_input, l_max_input);
+      if (e_code) p_input[l_input++] = c;
+    } while (e_code);
+    if (e_code) {
+      string_identifier* tmp = new string_identifier{p_input, l_input};
+      if (l_pps >= l_max_pps) expand_string_array_size(pps, l_pps, l_max_pps);
+      *(pps + l_pps++) = tmp;
+    }
+  };
+  for (int i = 0; i < l_pps; ++i) std::cout << pps[i] << std::endl;
+
+  /*for (int i = l_pps - 1; i >= 0; --i)
+      delete pps[i];*/
+  // THE END - PART WITH USERS INPUT
+
   if (checking_string()) {
     std::cerr << "Here some errors" << std::endl;
   }
-  /*
-  while (true) {
-          int size_ = 10;
-          char* usr_string = new char[size_];
-          while (!(std::cin >> usr_string)) {
-                  std::cerr << std::endl << "Wrong string" << std::endl;
-          }
-          string_identifier obj{ usr_string };
-          *(pps + num_of_strings) = &obj;
-          if (checking_string(*(*pps + num_of_strings), usr_string, 'a')) {
-                  std::cerr << "Here some errors" << std::endl;
-          }
 
-          ++num_of_strings;
-  }
-  */
-  // if (checking_string())
   return 0;
+}
+
+void expand_string_array_size(my_string::string** pp, int l, int& l_max_old,
+                              double coeff) {
+  l_max_old *= coeff;
+  if (l >= l_max_old) l_max_old *= 2;
+  my_string::string** pp_new = new my_string::string[l_max_old];
+  for (int i = 0; i < l; ++i) pp_new[i] = pp[i];
+  delete[] pp;
+  pp = pp_new;
+  return;
+}
+
+void expand_char_array_size(char* p, int l, int& l_max_old, double coeff) {
+  l_max_old *= coeff;
+  if (l >= l_max_old) l_max_old *= 2;
+  char* p_new = new char[l_max_old];
+  for (int i = 0; i < l; ++i) p_new[i] = p[i];
+  delete[] p;
+  p = p_new;
+  return;
 }
 
 int checking_string() {
@@ -64,7 +93,7 @@ int checking_string() {
          << endl;
   }
   if (!e_code) {
-    const char *test_result = "a";
+    const char* test_result = "a";
     string_identifier tmp{'a'};
 
     bool test1 = !(tmp.i_compare_with_string(test_result, 1));
@@ -73,7 +102,7 @@ int checking_string() {
          << (test1 && test2 ? "SUCCESS" : (e_code++, "FAIL")) << endl;
   }
   if (!e_code) {
-    const char *test_result = "bebra";
+    const char* test_result = "bebra";
     string_identifier tmp{test_result, 5};
 
     cout << "String constructor test: "
@@ -83,7 +112,7 @@ int checking_string() {
   }
 
   if (!e_code) {
-    const char *for_test = "bebra";
+    const char* for_test = "bebra";
     string_identifier from{for_test, 5};
     string_identifier to{from};
 
@@ -113,7 +142,7 @@ int checking_string() {
   }
 
   if (!e_code) {
-    const char *for_test = "bebra";
+    const char* for_test = "bebra";
     string_identifier from{for_test, 5}, to = from;
 
     cout << "Overload for \'=\' operation test result: "
@@ -140,7 +169,7 @@ int checking_string() {
                *test_result = "AsobakaB";
     string_identifier test1{for_test1, 14}, test2{for_test2, 6};
     // :))))))))))))))))))))))))))))))
-    test1 - static_cast<string_identifier &&>(test2);
+    test1 - static_cast<string_identifier&&>(test2);
     cout << "Overload for \'-\' operation test result: "
          << (test1.i_compare_with_string(test_result, 8) ? (e_code++, "FAIL")
                                                          : "SUCCESS")

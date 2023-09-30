@@ -11,9 +11,6 @@ std::ostream& print_string(const char* mpstring, const int mlenght,
 
 class string_identifier;
 
-// void print_string(const char* str, const int l, std::ostream& to =
-// std::cout);
-
 class string {
  private:
   // My Pointer string
@@ -47,6 +44,7 @@ class string {
 };
 
 class string_identifier : public string {
+ private:
   int m_check_char(const char c);
   int m_comparator(const string_identifier& obj1,
                    const string_identifier& obj2);
@@ -64,7 +62,6 @@ class string_identifier : public string {
   // int i_get_lenght() const;
 
   string_identifier& operator=(const string_identifier&);
-  // string_identifier& operator=(const char*);
   string_identifier& operator+(const string_identifier&);
   string_identifier& operator-(string_identifier&&);
   int operator>(const string_identifier&);
@@ -73,6 +70,5 @@ class string_identifier : public string {
   friend std::ostream& operator<<(std::ostream&, const string_identifier&);
 
   const char* i_find_substring(const char* ptr, const int l) const override;
-  // char* remove_substring(const char* ptr) override;
 };
 }  // namespace my_string
