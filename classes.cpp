@@ -8,7 +8,7 @@ std::ostream& print_string(const char* str, const int l, std::ostream& to) {
   return to;
 }
 
-string::string() : mp_string(new char[32]), m_lenght(0) {}
+string::string() : mp_string(), m_lenght(0) {}
 
 string::string(const char* ptr, const int l)
     : mp_string(new char[l]), m_lenght(l) {
@@ -23,7 +23,8 @@ string::string(const string& parent)
     : string(parent.e_get_string(), parent.i_get_lenght()) {}
 
 string::~string() {
-  delete[] mp_string;
+  if(mp_string)
+        delete[] mp_string;
   mp_string = nullptr;
   m_lenght = 0;
 }
@@ -127,6 +128,8 @@ string_identifier::string_identifier(const char c) : string(c) {
 string_identifier::string_identifier(const string_identifier& parent)
     : string(static_cast<const string&>(parent)) {}
 
+string_identifier::~string_identifier() {;}
+
 void string_identifier::i_set_uppercase() {
   const char k_delta = k_lower_a - k_upper_a > 0 ? k_lower_a - k_upper_a
                                                  : -(k_lower_a - k_upper_a);
@@ -151,7 +154,7 @@ const char* string_identifier::i_find_substring(const char* ptr,
   const int this_lenght = i_get_lenght();
   const char* this_str = e_get_string();
   for (int j = 0; i < this_lenght; ++i) {
-    for (j = 0; i < this_lenght && j < l && ptr[j] == this_str[i + j]; ++j) {
+    for (j = 0; i + j < this_lenght && j < l && ptr[j] == this_str[i + j]; ++j) {
       ;
     }
     if (j == l) {

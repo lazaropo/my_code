@@ -12,16 +12,17 @@ std::ostream& print_string(const char* mpstring, const int mlenght,
 class string_identifier;
 
 class string {
- private:
+ protected:
   // My Pointer string
   char* mp_string = nullptr;
   int m_lenght = 0;
 
- protected:
   void e_remove_string();
+  // KILL IT!!!
   const char* e_get_string() const;
   void e_set_char(const char c);
   void e_set_string(const char* new_string, const int l);
+  // STOP
   void e_add_string(const char* str, const int l);
 
  public:
@@ -29,7 +30,7 @@ class string {
   string(const char c);
   string(const char* ptr, const int l);
   string(const string& parent);
-  ~string();
+  virtual ~string();
 
   int i_get_lenght() const;
   char* i_get_string();
@@ -54,10 +55,10 @@ class string_identifier : public string {
   string_identifier(const char* ptr, const int l);
   string_identifier(const char c);
   string_identifier(const string_identifier&);
-  ~string_identifier() = default;
+  ~string_identifier() override;
 
-  void i_set_uppercase();
-  void i_set_lowercase();
+  void i_set_uppercase() override;
+  void i_set_lowercase() override;
   char* i_find_symbol(const char c);
   // int i_get_lenght() const;
 
