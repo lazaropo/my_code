@@ -8,7 +8,7 @@ constexpr char k_upper_z = 'Z';
 
 std::ostream& print_string(const char* mpstring, const int mlenght,
                            std::ostream& = std::cout);
-
+int check_char(const char c);
 class string_identifier;
 
 // void print_string(const char* str, const int l, std::ostream& to = std::cout);

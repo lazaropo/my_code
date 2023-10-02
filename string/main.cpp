@@ -22,33 +22,46 @@
 int checking_string();
 
 int main() {
-  /*
-  using namespace my_string;
-  string* pps = string_identifier{"test"};
-  int num_of_strings = 0;
-  */
-  if (checking_string()) {
+    if (checking_string()) {
     std::cerr << "Here some errors" << std::endl;
+    return 1;
   }
-  /*
-  while (true) {
-          int size_ = 10;
-          char* usr_string = new char[size_];
-          while (!(std::cin >> usr_string)) {
-                  std::cerr << std::endl << "Wrong string" << std::endl;
-          }
-          string_identifier obj{ usr_string };
-          *(pps + num_of_strings) = &obj;
-          if (checking_string(*(*pps + num_of_strings), usr_string, 'a')) {
-                  std::cerr << "Here some errors" << std::endl;
-          }
+  using namespace my_string;
+  // int num_of_strings = 4;
+  string *pps;
+  int pps_i = 0;
 
-          ++num_of_strings;
+  do {
+      int size_of_string = 4, 
+          i=0;
+      char user_string[size_of_string];
+      char c;
+      while (!(std::cin>>c)){
+          if (check_char(c))
+              user_string[i++] = c;
+          else{
+              std::cerr << "Some chars not a-z, A-Z _ detected" << std::endl;
+          i = 0;
+             break;
+          }
+      }
+      if (!i)
+          break;
+      string_identifier obj{ user_string, i };
+      delete[] user_string;
+      string tmp[pps_i + 1];
+      for (int j = 0; j < pps_i + 1; ++j)
+          tmp[j] = pps_i[j];
+      tmp[pps_i] = obj;
+      delete[] pps;
+      pps = tmp;
+      std::cout << pps[pps_i];
+
+      ++pps_i;
   }
-  */
-  // if (checking_string())
   return 0;
 }
+
 
 
 int checking_string() {

@@ -8,6 +8,13 @@ namespace my_string {
         return to;
     }
 
+    int check_char(const char c) {
+        return ((c >= k_lower_a && c <= k_lower_z) || (c >= k_upper_a && c <= k_upper_z) ||
+            c == '_')
+            ? 0
+            : 1;
+    }
+
     string::string() : mp_string(new char[32]), m_lenght(0) {}
 
     string::string(const char* ptr, const int l) : mp_string(new char[l]), m_lenght(l) {
