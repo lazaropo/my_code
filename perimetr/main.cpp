@@ -22,7 +22,7 @@
 #include "figures.h"
  
 #include <vector>
-#include <iostream>
+// #include <iostream>
  
 int main() {
     using namespace figures;
@@ -48,6 +48,7 @@ int main() {
     }
  
     for (int i = 0; i < l_pps; ++i) {
+        (*pps + i)->o_print_it();
         std::cout << (*pps+i)->o_perimetr() << std::endl;
     }
  

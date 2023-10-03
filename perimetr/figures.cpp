@@ -30,4 +30,12 @@ namespace figures {
 			return -1;
 		return 2 * (a + b);
 	}
+	std::ostream& triangle::o_print_it() {
+		std::cout << "a=" << a << "; b=" << b << "; c=" << c << std::endl;
+		return std::cout;
+	}
+	std::ostream& rectangle::o_print_it() {
+		std::cout << "a=" << a << "; b=" << b << std::endl;
+		return std::cout;
+	}
 }
