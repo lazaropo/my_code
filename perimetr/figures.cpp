@@ -2,11 +2,11 @@
 
 namespace figures {
 	void expand_figures_array(figure**& pps, int l,
-		int* l_max, double coeff) {
-		*l_max *= coeff;
-		if (*l_max == l) *l_max *= 2;
-		figure** p_new = new figure*[*l_max];
-		for (int i = 0; i < l; ++i) *p_new[i] = *pps[i];
+		int& l_max, double coeff) {
+		l_max *= coeff;
+		if (l_max == l) l_max *= 2;
+		figure** p_new = new figure*[l_max];
+		for (int i = 0; i < l; ++i) p_new[i] = pps[i];
 		delete[] pps;
 		pps = p_new;
 		return;

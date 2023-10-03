@@ -5,7 +5,7 @@ namespace figures {
 	class triangle;
 	class rectangle;
 	void expand_figures_array(figure**& pps, int l,
-		int* l_max, double coeff = 1.7);
+		int& l_max, double coeff = 1.7);
 	class figure {
 	public:
 		virtual int o_perimetr() const = 0;

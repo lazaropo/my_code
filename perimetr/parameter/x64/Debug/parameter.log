@@ -1,0 +1,6 @@
+﻿  figures.cpp
+C:\Users\roman\Desktop\C++\my_code\perimetr\figures.cpp(6,13): warning C4244: *=: преобразование "double" в "int", возможна потеря данных
+  main.cpp
+  parameter.cpp
+  Создание кода...
+  parameter.vcxproj -> C:\Users\roman\Desktop\C++\my_code\perimetr\parameter\x64\Debug\parameter.exe
